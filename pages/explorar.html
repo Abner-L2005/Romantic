@@ -1,24 +1,30 @@
+<!-- pages/explorar.html -->
 <!DOCTYPE html>
 <!--
   Arquivo: pages/explorar.html
   Dono: Unidade 2 (Catálogo de Ideias)
-  Contrato / Propósito:
-  - Catálogo interativo de 20 ideias de encontros e atividades.
-  - Filtro por categorias ("Em casa", "Ao ar livre", "Românticas", "Divertidas", "Rápidas", "Baixo custo").
-  - Campo de busca instantânea em tempo real (Ideias.listar({ categoria, busca })).
-  - Cards com badges de tempo, custo, dificuldade e pontos.
-  - Botão para ver detalhes (pages/ideia.html?id=...).
+  
+  Contrato / Requisitos:
+  - Exige login (RN01 via Auth.exigirLogin).
+  - Chips de seleção de categoria ("Todas" e as 6 categorias).
+  - Campo de busca com label acessível para busca em tempo real (RF04).
+  - Grade de cards responsiva: 1 coluna no celular (360px), 2 no tablet (768px), 3 a 4 no desktop (1200px).
+  - Mensagem de estado vazio quando nenhum resultado corresponder aos filtros.
 -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Explorar Ideias — Romantic</title>
+  <!-- Google Fonts: Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5.3 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- CSS Base e Catálogo -->
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/catalogo.css">
 </head>
@@ -27,25 +33,233 @@
   <div id="app-header"></div>
 
   <main id="app-main" class="container py-4 flex-grow-1">
-    <!-- Filtros de categoria, campo de busca e grade de ideias serão implementados na Unidade 2 -->
+
+    <!-- Cabeçalho da Página -->
+    <header class="mb-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div>
+          <h1 class="h3 fw-bold mb-1">Catálogo de Atividades</h1>
+          <p class="text-secondary mb-0">Encontrem a inspiração perfeita para o próximo momento a dois.</p>
+        </div>
+        <span class="badge bg-white text-secondary border px-3 py-2 rounded-pill small fw-semibold shadow-sm align-self-start align-self-md-auto" id="contador-resultados">
+          20 ideias disponíveis
+        </span>
+      </div>
+    </header>
+
+    <!-- Barra de Filtros e Busca -->
+    <section class="card card-romantic p-3 p-md-4 mb-4" aria-label="Filtros do catálogo">
+      <div class="row g-3">
+        <!-- Campo de Busca com Label Semântico -->
+        <div class="col-12 col-md-6">
+          <label for="campo-busca" class="form-label small fw-bold text-secondary mb-1">
+            <i class="bi-search me-1" aria-hidden="true"></i> Buscar pelo nome ou descrição
+          </label>
+          <div class="input-group">
+            <input type="search" 
+                   id="campo-busca" 
+                   class="form-control" 
+                   placeholder="Ex: piquenique, massagem, cinema, jogos..." 
+                   aria-describedby="btn-limpar-busca">
+            <button class="btn btn-outline-secondary" type="button" id="btn-limpar-busca" title="Limpar busca">
+              <i class="bi-x-lg" aria-hidden="true"></i>
+              <span class="visually-hidden">Limpar busca</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chips de Seleção de Categoria -->
+        <div class="col-12 col-md-6">
+          <label class="form-label small fw-bold text-secondary mb-1 d-block">
+            <i class="bi-funnel me-1" aria-hidden="true"></i> Filtrar por categoria
+          </label>
+          <nav class="chips-container" id="container-chips" aria-label="Filtro de categorias"></nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grade Responsiva de Cards de Ideias -->
+    <section aria-label="Lista de ideias">
+      <!-- Grade: 1 col celular, 2 col tablet, 3-4 col desktop -->
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="grade-ideias">
+        <!-- Renderizado dinamicamente via JavaScript -->
+      </div>
+
+      <!-- Mensagem de Nenhum Resultado Encontrado -->
+      <div id="mensagem-vazia" class="caixa-vazia d-none mt-3" role="status">
+        <i class="bi-search-heart mb-3 d-block" aria-hidden="true"></i>
+        <h2 class="h5 fw-bold text-dark mb-2">Nenhuma ideia encontrada</h2>
+        <p class="text-secondary small mb-3" style="max-width: 480px; margin: 0 auto;">
+          Não encontramos nenhuma atividade com os termos ou categoria selecionados. Tente buscar por palavras mais simples ou limpar os filtros.
+        </p>
+        <button type="button" class="btn btn-romantic-outline btn-sm" id="btn-resetar-filtros">
+          <i class="bi-arrow-clockwise me-1" aria-hidden="true"></i> Limpar filtros e ver todas
+        </button>
+      </div>
+    </section>
+
   </main>
 
   <div id="app-footer"></div>
 
+  <!-- Scripts Necessários -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/storage.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/dados-ideias.js"></script>
   <script src="../js/ideias.js"></script>
   <script src="../js/layout.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof Auth !== 'undefined' && typeof Auth.exigirLogin === 'function') {
-        Auth.exigirLogin('login.html');
+      // 1. Aplica RN01: Exige usuário autenticado
+      try {
+        if (typeof Auth !== 'undefined' && typeof Auth.exigirLogin === 'function') {
+          Auth.exigirLogin('login.html');
+        }
+      } catch (e) {
+        return;
       }
+
+      // 2. Monta o layout
       if (typeof Layout !== 'undefined' && typeof Layout.montar === 'function') {
         Layout.montar({ paginaAtiva: 'explorar' });
       }
+
+      // Fallback de navegação se o layout da U1 ainda for esqueleto
+      const headerEl = document.getElementById('app-header');
+      if (headerEl && (!headerEl.firstElementChild || headerEl.innerHTML.includes('<!-- Navbar'))) {
+        headerEl.innerHTML = `
+          <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+            <div class="container">
+              <a class="navbar-brand fw-bold text-danger d-flex align-items-center gap-2" href="dashboard.html" style="color: #E91E63 !important;">
+                <i class="bi-heart-fill"></i> Romantic
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-2">
+                  <li class="nav-item"><a class="nav-link text-secondary" href="dashboard.html"><i class="bi-speedometer2 me-1"></i> Dashboard</a></li>
+                  <li class="nav-item"><a class="nav-link fw-semibold active" style="color: #E91E63;" href="explorar.html"><i class="bi-compass me-1"></i> Explorar Ideias</a></li>
+                  <li class="nav-item"><a class="nav-link text-secondary" href="desafios.html"><i class="bi-flag me-1"></i> Meus Desafios</a></li>
+                  <li class="nav-item"><a class="nav-link text-secondary" href="recompensas.html"><i class="bi-gift me-1"></i> Recompensas</a></li>
+                  <li class="nav-item"><a class="nav-link text-secondary" href="perfil.html"><i class="bi-person-heart me-1"></i> Perfil</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        `;
+      }
+
+      // 3. Gerenciamento do Estado dos Filtros
+      const campoBusca = document.getElementById('campo-busca');
+      const btnLimparBusca = document.getElementById('btn-limpar-busca');
+      const containerChips = document.getElementById('container-chips');
+      const gradeIdeias = document.getElementById('grade-ideias');
+      const mensagemVazia = document.getElementById('mensagem-vazia');
+      const contadorResultados = document.getElementById('contador-resultados');
+      const btnResetarFiltros = document.getElementById('btn-resetar-filtros');
+
+      let categoriaSelecionada = 'Todas';
+
+      // Cria os chips de categoria: "Todas" + categorias do catálogo
+      const listaCategorias = ['Todas', ...Ideias.categorias()];
+
+      function montarChips() {
+        containerChips.innerHTML = '';
+        listaCategorias.forEach(cat => {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = `chip-filtro ${cat === categoriaSelecionada ? 'ativo' : ''}`;
+          chip.textContent = cat;
+          chip.setAttribute('aria-pressed', cat === categoriaSelecionada ? 'true' : 'false');
+          chip.addEventListener('click', () => {
+            categoriaSelecionada = cat;
+            montarChips();
+            aplicarFiltros();
+          });
+          containerChips.appendChild(chip);
+        });
+      }
+
+      // Aplica filtros e renderiza cards
+      function aplicarFiltros() {
+        const termo = campoBusca.value;
+        const categoriaFiltro = categoriaSelecionada === 'Todas' ? '' : categoriaSelecionada;
+        
+        // Cobre: RF04 (listar com categoria e busca)
+        const ideiasFiltradas = Ideias.listar({
+          categoria: categoriaFiltro,
+          busca: termo
+        });
+
+        contadorResultados.textContent = `${ideiasFiltradas.length} ${ideiasFiltradas.length === 1 ? 'ideia encontrada' : 'ideias encontradas'}`;
+
+        if (ideiasFiltradas.length === 0) {
+          gradeIdeias.innerHTML = '';
+          mensagemVazia.classList.remove('d-none');
+        } else {
+          mensagemVazia.classList.add('d-none');
+          renderizarGrade(ideiasFiltradas);
+        }
+      }
+
+      function renderizarGrade(ideias) {
+        gradeIdeias.innerHTML = '';
+        ideias.forEach(ideia => {
+          const col = document.createElement('div');
+          col.className = 'col';
+          col.innerHTML = `
+            <article class="card card-ideia p-3">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="icone-circular-ideia" aria-hidden="true">
+                  <i class="${ideia.icone || 'bi-heart-fill'}"></i>
+                </div>
+                <span class="badge-pontos-destaque">
+                  <i class="bi-star-fill" aria-hidden="true"></i> +${ideia.pontos} pts
+                </span>
+              </div>
+              <span class="badge-categoria-pill mb-2">${ideia.categoria}</span>
+              <h2 class="h5 fw-bold text-dark mb-2">${ideia.titulo}</h2>
+              <p class="text-secondary small flex-grow-1 mb-3">${ideia.descricao}</p>
+              
+              <div class="d-flex flex-wrap gap-1 mb-3">
+                <span class="badge-meta"><i class="bi-clock" aria-hidden="true"></i> ${ideia.tempoMin} min</span>
+                <span class="badge-meta"><i class="bi-cash-coin" aria-hidden="true"></i> ${ideia.custo}</span>
+                <span class="badge-meta"><i class="bi-bar-chart-fill" aria-hidden="true"></i> ${ideia.dificuldade}</span>
+              </div>
+
+              <a href="ideia.html?id=${encodeURIComponent(ideia.id)}" class="btn btn-romantic-outline btn-sm w-100">
+                Ver Detalhes
+              </a>
+            </article>
+          `;
+          gradeIdeias.appendChild(col);
+        });
+      }
+
+      // Eventos de busca
+      campoBusca.addEventListener('input', () => {
+        aplicarFiltros();
+      });
+
+      btnLimparBusca.addEventListener('click', () => {
+        campoBusca.value = '';
+        campoBusca.focus();
+        aplicarFiltros();
+      });
+
+      btnResetarFiltros.addEventListener('click', () => {
+        campoBusca.value = '';
+        categoriaSelecionada = 'Todas';
+        montarChips();
+        aplicarFiltros();
+      });
+
+      // Inicialização
+      montarChips();
+      aplicarFiltros();
     });
   </script>
 </body>
