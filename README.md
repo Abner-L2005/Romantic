@@ -1,6 +1,5 @@
-<<<<<<< HEAD
-# Romantic 💕
 
+# Romantic 💕
 > *"Para continuar escolhendo depois do match."*
 
 Aplicação web mobile-first voltada para casais (com foco em 18–25 anos) manterem e renovarem a conexão no dia a dia por meio de desafios a dois, memórias afetivas, gamificação de hábitos e recompensas personalizadas.
@@ -63,7 +62,6 @@ Romantic/
 ---
 
 ## 🚀 Como Executar
-
 Por ser uma aplicação 100% estática sem necessidade de compilação ou instalação de pacotes:
 
 1. Clone o repositório ou baixe os arquivos.
@@ -78,7 +76,6 @@ Por ser uma aplicação 100% estática sem necessidade de compilação ou instal
 ---
 
 ## 🧪 Suíte de Testes Automatizados
-
 O projeto conta com um runner de testes automatizados puro que valida todas as regras de negócio (**RN01 a RN08**) e os contratos de cada módulo:
 
 1. Abra o arquivo `tests/tests.html` no seu navegador.
@@ -87,7 +84,6 @@ O projeto conta com um runner de testes automatizados puro que valida todas as r
 ---
 
 ## 📜 Metodologia e Desenvolvimento
-
 Este projeto adota **Spec-Driven Development (SDD)**. O documento canônico [`docs/SPEC.md`](docs/SPEC.md) rege estritamente todo o escopo, contratos e regras de negócio.
 Consulte [`CLAUDE.md`](CLAUDE.md) para orientações sobre workflow de branches e boas práticas de engenharia.
 =======
