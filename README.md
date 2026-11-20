@@ -90,3 +90,5 @@ Consulte [`CLAUDE.md`](CLAUDE.md) para orientações sobre workflow de branches 
 # Romantic
 Protótipo web do site Romantic para apresentação e conclusão do 4º semestre em Análise e Desenvolvimento de Sistemas referente à metéria de Projeto Integrador em Programação Web
 >>>>>>> 91763e5470c5c4f247bb54cb6c3bdce720cb5534
+
+ativação do Pages
