@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+  Arquivo: index.html
+  Dono: Unidade 1 (Fundação / Apresentação)
+  Contrato / Propósito:
+  - Landing page pública do Romantic.
+  - Apresenta a proposta de valor ("Para continuar escolhendo depois do match"), ODS 3 e ODS 5.
+  - Links para login e cadastro.
+  - Redireciona usuários já autenticados diretamente para o dashboard.
+  - Utiliza Bootstrap 5.3 CDN, Poppins e Layout.montar({ paginaAtiva: 'home' }).
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Romantic — Para continuar escolhendo depois do match</title>
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- CSS Base do Projeto -->
+  <link rel="stylesheet" href="css/base.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <div id="app-header"></div>
+
+  <main id="app-main" class="flex-grow-1">
+    <!-- Conteúdo da landing page será implementado na Unidade 1 -->
+  </main>
+
+  <div id="app-footer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    // Esqueleto inicial: se já autenticado, redireciona ao dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Layout !== 'undefined' && typeof Layout.montar === 'function') {
+        Layout.montar({ paginaAtiva: 'home' });
+      }
+      if (typeof Auth !== 'undefined' && Auth.usuarioAtual && Auth.usuarioAtual()) {
+        window.location.href = 'pages/dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>

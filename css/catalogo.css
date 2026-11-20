@@ -1,0 +1,44 @@
+/**
+ * Arquivo: css/catalogo.css
+ * Dono: Unidade 2 (Catálogo e Dashboard)
+ * Contrato / Propósito:
+ * - Estilização do card de destaque da "Ideia do Dia".
+ * - Filtros com chips / pills clicáveis para seleção de categorias.
+ * - Grade responsiva de ideias com badges de tempo, custo, dificuldade e pontos.
+ * - Elementos visuais da tela de detalhe da ideia.
+ */
+
+/* Badges e Tags do Catálogo */
+.badge-categoria {
+  background-color: var(--rmt-primary-light);
+  color: var(--rmt-primary);
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 0.35rem 0.85rem;
+}
+
+.chip-filtro {
+  cursor: pointer;
+  border: 1px solid var(--rmt-primary);
+  color: var(--rmt-primary);
+  background-color: var(--rmt-white);
+  border-radius: 30px;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.chip-filtro.ativo,
+.chip-filtro:hover {
+  background-color: var(--rmt-primary);
+  color: var(--rmt-white);
+}
+
+/* Card da Ideia do Dia */
+.card-ideia-dia {
+  background: linear-gradient(135deg, #FFF0F5 0%, #FFFFFF 100%);
+  border: 2px solid var(--rmt-primary);
+  border-radius: var(--rmt-radius-lg);
+  box-shadow: var(--rmt-shadow);
+}
