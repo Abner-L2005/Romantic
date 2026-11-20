@@ -1,44 +1,241 @@
+/* css/catalogo.css */
 /**
  * Arquivo: css/catalogo.css
  * Dono: Unidade 2 (Catálogo e Dashboard)
- * Contrato / Propósito:
- * - Estilização do card de destaque da "Ideia do Dia".
- * - Filtros com chips / pills clicáveis para seleção de categorias.
+ * 
+ * Responsabilidades:
+ * - Estilização dos componentes do catálogo, Ideia do Dia e tela de detalhes.
+ * - Chips de seleção de categoria com microinterações e foco acessível.
  * - Grade responsiva de ideias com badges de tempo, custo, dificuldade e pontos.
- * - Elementos visuais da tela de detalhe da ideia.
+ * - Card hero da "Ideia do Dia" no dashboard.
  */
 
-/* Badges e Tags do Catálogo */
-.badge-categoria {
-  background-color: var(--rmt-primary-light);
-  color: var(--rmt-primary);
-  font-weight: 500;
-  border-radius: 20px;
-  padding: 0.35rem 0.85rem;
+/* ==========================================================================
+   CHIPS DE CATEGORIA (Filtros Interativos)
+   ========================================================================== */
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.25rem;
 }
 
 .chip-filtro {
-  cursor: pointer;
-  border: 1px solid var(--rmt-primary);
-  color: var(--rmt-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   background-color: var(--rmt-white);
-  border-radius: 30px;
-  padding: 0.4rem 1rem;
+  border: 1.5px solid rgba(233, 30, 99, 0.35);
+  color: var(--rmt-primary);
   font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-weight: 500;
+  padding: 0.45rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
   user-select: none;
 }
 
-.chip-filtro.ativo,
 .chip-filtro:hover {
-  background-color: var(--rmt-primary);
-  color: var(--rmt-white);
+  background-color: var(--rmt-primary-light);
+  border-color: var(--rmt-primary);
+  color: var(--rmt-primary-dark);
 }
 
-/* Card da Ideia do Dia */
+.chip-filtro.ativo {
+  background-color: var(--rmt-primary);
+  border-color: var(--rmt-primary);
+  color: var(--rmt-white);
+  box-shadow: 0 4px 10px rgba(233, 30, 99, 0.25);
+}
+
+.chip-filtro:focus-visible {
+  outline: 3px solid var(--rmt-primary);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   CARD HERO — IDEIA DO DIA (Dashboard)
+   ========================================================================== */
 .card-ideia-dia {
   background: linear-gradient(135deg, #FFF0F5 0%, #FFFFFF 100%);
-  border: 2px solid var(--rmt-primary);
+  border: 2px solid rgba(233, 30, 99, 0.4);
+  border-radius: var(--rmt-radius-lg);
+  box-shadow: 0 8px 24px rgba(233, 30, 99, 0.12);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-ideia-dia:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(233, 30, 99, 0.18);
+}
+
+.badge-ideia-dia {
+  background: linear-gradient(90deg, #E91E63, #FF4081);
+  color: var(--rmt-white);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.icone-destaque-dia {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--rmt-white);
+  color: var(--rmt-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.15);
+}
+
+/* ==========================================================================
+   CARDS DA GRADE DE IDEIAS (Catálogo & Sugestões)
+   ========================================================================== */
+.card-ideia {
+  background-color: var(--rmt-white);
+  border: 1px solid rgba(233, 30, 99, 0.14);
+  border-radius: var(--rmt-radius);
+  box-shadow: var(--rmt-shadow);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-ideia:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--rmt-shadow-hover);
+  border-color: rgba(233, 30, 99, 0.35);
+}
+
+.icone-circular-ideia {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background-color: var(--rmt-primary-light);
+  color: var(--rmt-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.badge-categoria-pill {
+  background-color: #FCE4EC;
+  color: #C2185B;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 0.3rem 0.75rem;
+  display: inline-block;
+}
+
+.badge-meta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #424242;
+  background-color: #F5F5F5;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
+  padding: 0.25rem 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.badge-pontos-destaque {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #E65100;
+  background-color: #FFF3E0;
+  border-radius: 8px;
+  padding: 0.25rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ==========================================================================
+   TELA DE DETALHE DA IDEIA (pages/ideia.html)
+   ========================================================================== */
+.card-detalhe-ideia {
+  background-color: var(--rmt-white);
+  border: 1px solid rgba(233, 30, 99, 0.16);
   border-radius: var(--rmt-radius-lg);
   box-shadow: var(--rmt-shadow);
+  overflow: hidden;
+}
+
+.cabecalho-detalhe {
+  background: linear-gradient(135deg, #FFF0F5 0%, #FFFFFF 100%);
+  border-bottom: 1px solid rgba(233, 30, 99, 0.1);
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.icone-detalhe-grande {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--rmt-white);
+  color: var(--rmt-primary);
+  font-size: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(233, 30, 99, 0.18);
+  margin-bottom: 1rem;
+}
+
+.caixa-meta-item {
+  background-color: #FAFAFA;
+  border: 1px solid #EEEEEE;
+  border-radius: var(--rmt-radius-sm);
+  padding: 0.85rem;
+  text-align: center;
+  height: 100%;
+}
+
+.caixa-meta-item .rotulo {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--rmt-text-secondary);
+  margin-bottom: 0.2rem;
+}
+
+.caixa-meta-item .valor {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--rmt-text-primary);
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   ESTADOS DE MENSAGENS E BUSCA VAZIA
+   ========================================================================== */
+.caixa-vazia {
+  background-color: var(--rmt-white);
+  border: 2px dashed rgba(233, 30, 99, 0.25);
+  border-radius: var(--rmt-radius);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.caixa-vazia i {
+  font-size: 2.8rem;
+  color: var(--rmt-primary);
+  opacity: 0.7;
 }
