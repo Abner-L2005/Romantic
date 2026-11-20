@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Romantic 💕
 
 > *"Para continuar escolhendo depois do match."*
@@ -89,3 +90,7 @@ O projeto conta com um runner de testes automatizados puro que valida todas as r
 
 Este projeto adota **Spec-Driven Development (SDD)**. O documento canônico [`docs/SPEC.md`](docs/SPEC.md) rege estritamente todo o escopo, contratos e regras de negócio.
 Consulte [`CLAUDE.md`](CLAUDE.md) para orientações sobre workflow de branches e boas práticas de engenharia.
+=======
+# Romantic
+Protótipo web do site Romantic para apresentação e conclusão do 4º semestre em Análise e Desenvolvimento de Sistemas referente à metéria de Projeto Integrador em Programação Web
+>>>>>>> 91763e5470c5c4f247bb54cb6c3bdce720cb5534
