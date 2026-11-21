@@ -1,0 +1,295 @@
+<!-- pages/ideia.html -->
+<!DOCTYPE html>
+<!--
+  Arquivo: pages/ideia.html
+  Dono: Unidade 2 (Catálogo e Detalhes da Ideia)
+  
+  Contrato / Requisitos:
+  - Lê parâmetro ?id=X da URL e obtém a ideia via Ideias.obter(id).
+  - Exibe detalhes completos: descrição, tempo, custo, dificuldade, pontos e categoria.
+  - Botão "Aceitar desafio" chama Desafios.aceitar(id) (RF05).
+  - Mostra confirmação de sucesso com link para Meus Desafios (desafios.html).
+  - Trata exceções do tipo RegraViolada (ex: RN01, RN03).
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes da Atividade — Romantic</title>
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- CSS Base e Catálogo -->
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/catalogo.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <div id="app-header"></div>
+
+  <main id="app-main" class="container py-4 flex-grow-1">
+
+    <!-- Navegação / Breadcrumb de retorno -->
+    <nav class="mb-3" aria-label="Navegação secundária">
+      <a href="explorar.html" class="text-decoration-none text-secondary small fw-semibold d-inline-flex align-items-center gap-1">
+        <i class="bi-arrow-left" aria-hidden="true"></i> Voltar ao catálogo de ideias
+      </a>
+    </nav>
+
+    <!-- Estado de Erro: Ideia Não Encontrada -->
+    <div id="painel-nao-encontrado" class="caixa-vazia d-none" role="alert">
+      <i class="bi-exclamation-circle text-danger mb-3 d-block" aria-hidden="true"></i>
+      <h1 class="h4 fw-bold text-dark mb-2">Atividade não encontrada</h1>
+      <p class="text-secondary small mb-3">
+        A atividade solicitada não existe ou o identificador fornecido é inválido.
+      </p>
+      <a href="explorar.html" class="btn btn-romantic btn-sm">
+        <i class="bi-compass me-1" aria-hidden="true"></i> Explorar outras ideias
+      </a>
+    </div>
+
+    <!-- Card Principal de Detalhes da Ideia -->
+    <article id="painel-detalhe" class="card-detalhe-ideia d-none">
+      
+      <!-- Cabeçalho Visual da Ideia -->
+      <div class="cabecalho-detalhe">
+        <div class="icone-detalhe-grande" id="detalhe-icone" aria-hidden="true">
+          <i class="bi-heart-fill"></i>
+        </div>
+        <div class="mb-2">
+          <span class="badge-categoria-pill" id="detalhe-categoria">Categoria</span>
+        </div>
+        <h1 class="h2 fw-bold text-dark mb-2" id="detalhe-titulo">Título da Ideia</h1>
+        <p class="text-secondary mb-0 mx-auto" id="detalhe-descricao" style="max-width: 680px; font-size: 1.05rem;">
+          Descrição completa da atividade...
+        </p>
+      </div>
+
+      <!-- Corpo com Metadados e Ação -->
+      <div class="p-4 p-md-5">
+        
+        <!-- Grade de Metadados: Tempo, Custo, Dificuldade e Pontos -->
+        <div class="row row-cols-2 row-cols-md-4 g-3 mb-4">
+          <div class="col">
+            <div class="caixa-meta-item">
+              <span class="rotulo"><i class="bi-clock me-1" aria-hidden="true"></i> Duração</span>
+              <p class="valor" id="detalhe-tempo">-- min</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="caixa-meta-item">
+              <span class="rotulo"><i class="bi-cash-coin me-1" aria-hidden="true"></i> Custo</span>
+              <p class="valor" id="detalhe-custo">--</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="caixa-meta-item">
+              <span class="rotulo"><i class="bi-bar-chart-fill me-1" aria-hidden="true"></i> Nível</span>
+              <p class="valor" id="detalhe-dificuldade">--</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="caixa-meta-item" style="background-color: #FFF3E0; border-color: #FFE0B2;">
+              <span class="rotulo text-warning-emphasis"><i class="bi-star-fill me-1" aria-hidden="true"></i> Recompensa</span>
+              <p class="valor text-warning-emphasis" id="detalhe-pontos">+-- pts</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Área de Alerta / Mensagens de RegraViolada ou Sucesso -->
+        <div id="container-alerta" class="d-none mb-4" role="alert"></div>
+
+        <!-- Ação Principal: Aceitar Desafio -->
+        <div class="card p-3 bg-light border-0 rounded-4 text-center">
+          <h2 class="h5 fw-bold text-dark mb-2">Prontos para viver este momento juntos?</h2>
+          <p class="text-secondary small mb-3">
+            Ao aceitar, esta atividade se torna um desafio ativo do casal. Concluam e registrem uma foto ou mensagem para ganhar os pontos e aumentar a ofensiva!
+          </p>
+          <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+            <button type="button" class="btn btn-romantic btn-lg px-4" id="btn-aceitar-desafio">
+              <i class="bi-flag-fill me-2" aria-hidden="true"></i> Aceitar Desafio
+            </button>
+            <a href="explorar.html" class="btn btn-outline-secondary btn-lg px-4">
+              Escolher Outra
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </article>
+
+  </main>
+
+  <div id="app-footer"></div>
+
+  <!-- Scripts Necessários -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/casal.js"></script>
+  <script src="../js/dados-ideias.js"></script>
+  <script src="../js/ideias.js"></script>
+  <script src="../js/desafios.js"></script>
+  <script src="../js/layout.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Aplica RN01: Exige login
+      try {
+        if (typeof Auth !== 'undefined' && typeof Auth.exigirLogin === 'function') {
+          Auth.exigirLogin('login.html');
+        }
+      } catch (e) {
+        return;
+      }
+
+      // 2. Monta o layout
+      if (typeof Layout !== 'undefined' && typeof Layout.montar === 'function') {
+        Layout.montar({ paginaAtiva: 'explorar' });
+      }
+
+      // Fallback de navegação se o layout da U1 ainda for esqueleto
+      const headerEl = document.getElementById('app-header');
+      if (headerEl && (!headerEl.firstElementChild || headerEl.innerHTML.includes('<!-- Navbar'))) {
+        headerEl.innerHTML = `
+          <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+            <div class="container">
+              <a class="navbar-brand fw-bold text-danger d-flex align-items-center gap-2" href="dashboard.html" style="color: #E91E63 !important;">
+                <i class="bi-heart-fill"></i> Romantic
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-2">
+                  <li class="nav-item"><a class="nav-link text-secondary" href="dashboard.html"><i class="bi-speedometer2 me-1"></i> Dashboard</a></li>
+                  <li class="nav-item"><a class="nav-link fw-semibold active" style="color: #E91E63;" href="explorar.html"><i class="bi-compass me-1"></i> Explorar Ideias</a></li>
+                  <li class="nav-item"><a class="nav-link text-secondary" href="desafios.html"><i class="bi-flag me-1"></i> Meus Desafios</a></li>
+                  <li class="nav-item"><a class="nav-link text-secondary" href="recompensas.html"><i class="bi-gift me-1"></i> Recompensas</a></li>
+                  <li class="nav-item"><a class="nav-link text-secondary" href="perfil.html"><i class="bi-person-heart me-1"></i> Perfil</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        `;
+      }
+
+      // 3. Lê o ID da URL (?id=X)
+      const params = new URLSearchParams(window.location.search);
+      const ideiaId = params.get('id');
+
+      const painelDetalhe = document.getElementById('painel-detalhe');
+      const painelNaoEncontrado = document.getElementById('painel-nao-encontrado');
+      const containerAlerta = document.getElementById('container-alerta');
+      const btnAceitar = document.getElementById('btn-aceitar-desafio');
+
+      if (!ideiaId) {
+        painelNaoEncontrado.classList.remove('d-none');
+        return;
+      }
+
+      // 4. Obtém ideia do catálogo via Ideias.obter(id)
+      const ideia = Ideias.obter(ideiaId);
+      if (!ideia) {
+        painelNaoEncontrado.classList.remove('d-none');
+        return;
+      }
+
+      // 5. Preenche os dados da ideia
+      painelDetalhe.classList.remove('d-none');
+      document.title = `${ideia.titulo} — Romantic`;
+      document.getElementById('detalhe-titulo').textContent = ideia.titulo;
+      document.getElementById('detalhe-descricao').textContent = ideia.descricao;
+      document.getElementById('detalhe-categoria').textContent = ideia.categoria;
+      document.getElementById('detalhe-tempo').textContent = `${ideia.tempoMin} min`;
+      document.getElementById('detalhe-custo').textContent = ideia.custo;
+      document.getElementById('detalhe-dificuldade').textContent = ideia.dificuldade;
+      document.getElementById('detalhe-pontos').textContent = `+${ideia.pontos} pts`;
+
+      const iconeEl = document.getElementById('detalhe-icone');
+      if (iconeEl) {
+        iconeEl.innerHTML = `<i class="${ideia.icone || 'bi-heart-fill'}"></i>`;
+      }
+
+      // Funções auxiliares para feedback visual
+      function exibirMensagem(tipo, conteudoHtml) {
+        containerAlerta.className = `alert alert-${tipo} alert-dismissible fade show shadow-sm text-start`;
+        containerAlerta.innerHTML = `
+          ${conteudoHtml}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        `;
+        containerAlerta.classList.remove('d-none');
+      }
+
+      // 6. Ação do Botão "Aceitar Desafio"
+      btnAceitar.addEventListener('click', () => {
+        try {
+          // Aplica RN01, RN03 e RF05 chamando Desafios.aceitar(ideiaId)
+          if (typeof Desafios !== 'undefined' && typeof Desafios.aceitar === 'function') {
+            const desafioCriado = Desafios.aceitar(ideia.id);
+            
+            btnAceitar.disabled = true;
+            btnAceitar.classList.replace('btn-romantic', 'btn-success');
+            btnAceitar.innerHTML = `<i class="bi-check-circle-fill me-2" aria-hidden="true"></i> Desafio Aceito!`;
+
+            exibirMensagem('success', `
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <i class="bi-check-circle-fill fs-4 text-success" aria-hidden="true"></i>
+                <strong class="fs-6">Desafio aceito com amor!</strong>
+              </div>
+              <p class="mb-2">A atividade <em>"${ideia.titulo}"</em> agora está ativa na lista de desafios do casal.</p>
+              <div class="d-flex gap-2">
+                <a href="desafios.html" class="btn btn-sm btn-success">
+                  <i class="bi-flag me-1" aria-hidden="true"></i> Ir para Meus Desafios
+                </a>
+                <a href="explorar.html" class="btn btn-sm btn-outline-secondary">
+                  Explorar mais ideias
+                </a>
+              </div>
+            `);
+          } else {
+            // Caso a Unidade 3 ainda esteja desenvolvendo o módulo Desafios
+            exibirMensagem('info', `
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi-info-circle-fill fs-5" aria-hidden="true"></i>
+                <div>
+                  <strong>Quase lá!</strong> O módulo de desafios (Unidade 3) ainda está em integração. 
+                  Ideia selecionada com sucesso: <strong>${ideia.titulo}</strong>.
+                </div>
+              </div>
+            `);
+          }
+        } catch (erro) {
+          // Trata violações de regras de negócio (RegraViolada)
+          if (erro instanceof window.RegraViolada || (erro && erro.name === 'RegraViolada')) {
+            exibirMensagem('danger', `
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi-exclamation-triangle-fill fs-5 text-danger" aria-hidden="true"></i>
+                <div>
+                  <strong>[${erro.regra}] Atenção:</strong> ${erro.mensagem}
+                </div>
+              </div>
+            `);
+          } else {
+            console.error('Erro inesperado ao aceitar desafio:', erro);
+            exibirMensagem('danger', `
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi-x-circle-fill fs-5 text-danger" aria-hidden="true"></i>
+                <div>
+                  <strong>Erro:</strong> ${erro.message || 'Ocorreu um erro ao aceitar o desafio. Tente novamente.'}
+                </div>
+              </div>
+            `);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

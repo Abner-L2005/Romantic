@@ -1,0 +1,741 @@
+<!-- pages/recompensas.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Romantic — Recompensas do Casal</title>
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5.3 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- CSS Base do projeto (caminho estritamente relativo) -->
+  <link rel="stylesheet" href="../css/base.css">
+
+  <style>
+    :root {
+      --romantic-primary: #E91E63;
+      --romantic-primary-hover: #D81B60;
+      --romantic-bg-soft: #FCE4EC;
+      --romantic-bg: #FAFAFA;
+      --romantic-text: #212121;
+      --romantic-muted: #616161;
+      --romantic-points: #F57C00;
+      --romantic-success: #2E7D32;
+    }
+
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--romantic-bg);
+      color: var(--romantic-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Foco acessível WCAG AA */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--romantic-primary) !important;
+      outline-offset: 2px !important;
+    }
+
+    .navbar-romantic {
+      background-color: #ffffff;
+      border-bottom: 1px solid rgba(233, 30, 99, 0.15);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--romantic-primary) !important;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link.active {
+      color: var(--romantic-primary) !important;
+      font-weight: 600;
+    }
+
+    .card-romantic {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.08);
+      background-color: #ffffff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-romantic:hover {
+      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.12);
+    }
+
+    .banner-saldo {
+      background: linear-gradient(135deg, #FCE4EC 0%, #FFF0F5 100%);
+      border: 1px solid rgba(233, 30, 99, 0.2);
+      border-radius: 20px;
+    }
+
+    .badge-pontos {
+      background-color: #FFF3E0;
+      color: var(--romantic-points);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1px solid rgba(245, 124, 0, 0.3);
+      padding: 0.4em 0.7em;
+      border-radius: 10px;
+    }
+
+    .badge-resgatada {
+      background-color: #E8F5E9;
+      color: var(--romantic-success);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(46, 125, 50, 0.3);
+      padding: 0.35em 0.65em;
+      border-radius: 8px;
+    }
+
+    .btn-romantic {
+      background-color: var(--romantic-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 500;
+      padding: 0.55rem 1.25rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-romantic:hover, .btn-romantic:focus {
+      background-color: var(--romantic-primary-hover);
+      color: #ffffff;
+    }
+
+    .btn-bloqueado {
+      background-color: #e0e0e0;
+      color: #757575;
+      border: 1px solid #cccccc;
+      border-radius: 12px;
+      font-weight: 500;
+      cursor: not-allowed;
+    }
+
+    .footer-romantic {
+      background-color: #ffffff;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      margin-top: auto;
+      padding: 1.5rem 0;
+      color: var(--romantic-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Container para Navbar dinâmico via Layout ou fallback semântico -->
+  <header id="layout-header">
+    <nav class="navbar navbar-expand-lg navbar-romantic py-3" aria-label="Navegação principal">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard.html">
+          <i class="bi bi-heart-pulse-fill text-danger fs-4" aria-hidden="true"></i>
+          <span>Romantic</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" 
+                aria-controls="navContent" aria-expanded="false" aria-label="Alternar navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">
+                <i class="bi bi-speedometer2 me-1" aria-hidden="true"></i>Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="explorar.html">
+                <i class="bi bi-compass me-1" aria-hidden="true"></i>Explorar Ideias
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="desafios.html">
+                <i class="bi bi-flag me-1" aria-hidden="true"></i>Desafios
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="recompensas.html">
+                <i class="bi bi-gift-fill me-1" aria-hidden="true"></i>Recompensas
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="perfil.html">
+                <i class="bi bi-person-heart me-1" aria-hidden="true"></i>Perfil
+              </a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center gap-3">
+            <span id="nav-user-nome" class="small text-muted fw-semibold"></span>
+            <button id="btn-nav-logout" class="btn btn-outline-danger btn-sm rounded-pill px-3" type="button">
+              <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>Sair
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container my-4 my-md-5">
+    
+    <!-- Alertas Globais -->
+    <div id="alerta-global" class="d-none" role="alert" aria-live="polite"></div>
+
+    <!-- Destaque: Saldo de Pontos do Casal -->
+    <section class="banner-saldo p-4 p-md-5 mb-5 shadow-sm" aria-labelledby="titulo-saldo">
+      <div class="row align-items-center g-3">
+        <div class="col-12 col-md-8">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-stars text-warning fs-3" aria-hidden="true"></i>
+            <span class="text-uppercase tracking-wider fw-bold text-danger small">Economia do Casal</span>
+          </div>
+          <h1 id="titulo-saldo" class="h3 fw-bold mb-1">Recompensas do Nosso Amor</h1>
+          <p class="text-secondary mb-0">
+            Troquem os pontos acumulados em atividades concluídas por mimos e momentos especiais combinados entre vocês!
+          </p>
+        </div>
+        <div class="col-12 col-md-4 text-md-end">
+          <div class="bg-white p-3 p-md-4 rounded-4 shadow-sm d-inline-block text-center w-100" style="max-width: 280px;">
+            <span class="d-block text-muted small fw-semibold text-uppercase">Saldo Disponível</span>
+            <div class="d-flex align-items-center justify-content-center gap-2 my-1">
+              <i class="bi bi-coin text-warning fs-2" aria-hidden="true"></i>
+              <span id="valor-saldo" class="display-6 fw-bold text-dark">0</span>
+              <span class="fs-6 fw-bold text-secondary">pts</span>
+            </div>
+            <div class="small text-muted border-top pt-2 mt-2">
+              <span id="valor-acumulado" class="fw-semibold text-dark">0</span> acumulados no total
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulário: Criar Nova Recompensa -->
+    <section class="card-romantic p-4 p-md-4 mb-5" aria-labelledby="titulo-criar">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-plus-circle-fill text-danger fs-4" aria-hidden="true"></i>
+        <h2 id="titulo-criar" class="h4 fw-bold mb-0">Criar Nova Recompensa</h2>
+      </div>
+      <p class="text-muted small mb-4">
+        Cadastrem um combinado carinhoso (ex: massagem, jantar favorito, dia de folga da louça) e definam o custo em pontos.
+      </p>
+
+      <form id="form-criar-recompensa" novalidate>
+        <div class="row g-3">
+          <div class="col-12 col-md-7">
+            <label for="titulo-recompensa" class="form-label fw-semibold">
+              Título da Recompensa <span class="text-danger" aria-hidden="true">*</span>
+            </label>
+            <input type="text" class="form-control rounded-3 py-2" id="titulo-recompensa" 
+                   placeholder="Ex: Massagem relaxante nos pés por 20 min" required maxlength="100">
+            <div class="invalid-feedback">Por favor, informe o título da recompensa.</div>
+          </div>
+
+          <div class="col-12 col-md-5">
+            <label for="custo-recompensa" class="form-label fw-semibold">
+              Custo em Pontos <span class="text-danger" aria-hidden="true">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0 rounded-start-3 text-warning">
+                <i class="bi bi-coin" aria-hidden="true"></i>
+              </span>
+              <input type="number" class="form-control rounded-end-3 py-2" id="custo-recompensa" 
+                     placeholder="Ex: 100" min="1" step="1" required>
+              <div class="invalid-feedback">Informe um custo positivo maior que zero.</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="descricao-recompensa" class="form-label fw-semibold">
+              Descrição ou Detalhes (Opcional)
+            </label>
+            <textarea class="form-control rounded-3" id="descricao-recompensa" rows="2" 
+                      placeholder="Ex: Válido para qualquer noite da semana, com óleo aromático e luz de velas." maxlength="300"></textarea>
+          </div>
+
+          <div class="col-12 text-end pt-2">
+            <button type="submit" class="btn btn-romantic px-4 py-2" id="btn-submit-recompensa">
+              <i class="bi bi-gift-fill me-2" aria-hidden="true"></i>Cadastrar Recompensa
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Lista: Recompensas Disponíveis -->
+    <section class="mb-5" aria-labelledby="titulo-disponiveis">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="titulo-disponiveis" class="h4 fw-bold mb-0">
+          <i class="bi bi-bag-heart me-2 text-danger" aria-hidden="true"></i>Recompensas Disponíveis
+        </h2>
+        <span id="badge-total-disponiveis" class="badge rounded-pill bg-light text-dark border px-3 py-2">
+          0 disponíveis
+        </span>
+      </div>
+
+      <div id="lista-disponiveis" class="row g-3" aria-live="polite">
+        <!-- Injetado dinamicamente via JS -->
+      </div>
+    </section>
+
+    <!-- Lista: Recompensas Já Resgatadas -->
+    <section class="mb-5" aria-labelledby="titulo-resgatadas">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="titulo-resgatadas" class="h4 fw-bold mb-0">
+          <i class="bi bi-check-circle-fill me-2 text-success" aria-hidden="true"></i>Histórico de Resgates
+        </h2>
+        <span id="badge-total-resgatadas" class="badge rounded-pill bg-light text-dark border px-3 py-2">
+          0 resgatadas
+        </span>
+      </div>
+
+      <div id="lista-resgatadas" class="row g-3" aria-live="polite">
+        <!-- Injetado dinamicamente via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal de Confirmação de Resgate -->
+  <div class="modal fade" id="modalConfirmarResgate" tabindex="-1" aria-labelledby="modalResgateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow">
+        <div class="modal-header border-0 pb-0">
+          <h1 class="modal-title fs-5 fw-bold" id="modalResgateLabel">Confirmar Resgate</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body py-4">
+          <p class="mb-2">Você está prestes a resgatar a seguinte recompensa:</p>
+          <div class="p-3 bg-light rounded-3 border mb-3">
+            <h6 id="modal-recompensa-titulo" class="fw-bold mb-1 text-danger"></h6>
+            <p id="modal-recompensa-desc" class="small text-muted mb-2"></p>
+            <span class="badge-pontos">
+              <i class="bi bi-coin me-1" aria-hidden="true"></i>Custo: <span id="modal-recompensa-custo"></span> pts
+            </span>
+          </div>
+          <p class="small text-muted mb-0">
+            O valor será debitado imediatamente do saldo de pontos do casal. Confirmar?
+          </p>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-outline-secondary rounded-3 px-3" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-romantic px-4" id="btn-confirmar-resgate-final">
+            Sim, Resgatar!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé Semântico -->
+  <footer class="footer-romantic text-center" id="layout-footer">
+    <div class="container">
+      <p class="mb-1 fw-semibold text-danger">Romantic &copy; 2026</p>
+      <p class="mb-0 small">Para continuar escolhendo depois do match. Alinhado aos ODS 3 e ODS 5 da ONU.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts: Bootstrap Bundle CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Módulos do Sistema (caminhos estritamente relativos, sem barra inicial) -->
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/casal.js"></script>
+  <script src="../js/desafios.js"></script>
+  <script src="../js/pontuacao.js"></script>
+  <script src="../js/recompensas.js"></script>
+  <script src="../js/layout.js"></script>
+
+  <!-- Lógica da Página de Recompensas -->
+  <script>
+    (function () {
+      "use strict";
+
+      // Instância do Modal Bootstrap
+      let modalResgateInstance = null;
+      let recompensaIdParaResgate = null;
+
+      // Executa após carregamento do DOM
+      document.addEventListener("DOMContentLoaded", function () {
+        // Aplica RN01: Proteção de acesso à rota restrita
+        if (window.Auth && typeof window.Auth.exigirLogin === "function") {
+          window.Auth.exigirLogin("login.html");
+        }
+
+        const usuario = window.Auth ? window.Auth.usuarioAtual() : null;
+        if (!usuario) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Aplica RN02: Verifica vínculo do casal
+        const casal = window.Casal ? window.Casal.casalAtual() : null;
+        if (!casal) {
+          exibirAlerta(
+            "Você precisa vincular seu parceiro(a) antes de acessar as recompensas! <a href='vinculo.html' class='alert-link fw-bold'>Clique aqui para enviar ou aceitar um convite</a>.",
+            "warning",
+            false
+          );
+          // Desabilita form
+          const btnSubmit = document.getElementById("btn-submit-recompensa");
+          if (btnSubmit) btnSubmit.disabled = true;
+          return;
+        }
+
+        // Integração com Layout compartilhado (se implementado pela equipe)
+        if (window.Layout && typeof window.Layout.montar === "function") {
+          window.Layout.montar({ paginaAtiva: "recompensas" });
+        } else {
+          // Atualiza informações locais da Navbar fallback
+          const elUser = document.getElementById("nav-user-nome");
+          if (elUser) elUser.textContent = usuario.nome || usuario.email;
+        }
+
+        // Inicializa o modal Bootstrap
+        const modalEl = document.getElementById("modalConfirmarResgate");
+        if (modalEl && window.bootstrap) {
+          modalResgateInstance = new window.bootstrap.Modal(modalEl);
+        }
+
+        // Evento de Logout
+        const btnLogout = document.getElementById("btn-nav-logout");
+        if (btnLogout) {
+          btnLogout.addEventListener("click", function () {
+            if (window.Auth && typeof window.Auth.logout === "function") {
+              window.Auth.logout();
+            }
+            window.location.href = "login.html";
+          });
+        }
+
+        // Formulário de Cadastro de Recompensa
+        const formCriar = document.getElementById("form-criar-recompensa");
+        if (formCriar) {
+          formCriar.addEventListener("submit", function (e) {
+            e.preventDefault();
+            criarRecompensaHandler();
+          });
+        }
+
+        // Botão de confirmação de resgate no Modal
+        const btnConfirmarFinal = document.getElementById("btn-confirmar-resgate-final");
+        if (btnConfirmarFinal) {
+          btnConfirmarFinal.addEventListener("click", function () {
+            if (recompensaIdParaResgate) {
+              efetuarResgate(recompensaIdParaResgate);
+            }
+          });
+        }
+
+        // Renderiza conteúdo inicial
+        atualizarTela();
+      });
+
+      /**
+       * Atualiza saldos e listagens de recompensas na interface.
+       */
+      function atualizarTela() {
+        // Atualiza métricas de pontos (RN06)
+        let saldo = 0;
+        let acumulado = 0;
+        if (window.Pontuacao) {
+          saldo = typeof window.Pontuacao.total === "function" ? window.Pontuacao.total() : 0;
+          acumulado = typeof window.Pontuacao.acumulado === "function" ? window.Pontuacao.acumulado() : 0;
+        }
+
+        const elSaldo = document.getElementById("valor-saldo");
+        const elAcumulado = document.getElementById("valor-acumulado");
+        if (elSaldo) elSaldo.textContent = saldo;
+        if (elAcumulado) elAcumulado.textContent = acumulado;
+
+        // Lista recompensas
+        let todasRecompensas = [];
+        try {
+          if (window.Recompensas && typeof window.Recompensas.listar === "function") {
+            todasRecompensas = window.Recompensas.listar();
+          }
+        } catch (erro) {
+          console.error("Erro ao listar recompensas:", erro);
+        }
+
+        const disponiveis = todasRecompensas.filter(r => r.status === "DISPONIVEL");
+        const resgatadas = todasRecompensas.filter(r => r.status === "RESGATADA");
+
+        renderizarDisponiveis(disponiveis, saldo);
+        renderizarResgatadas(resgatadas);
+      }
+
+      /**
+       * Renderiza cards de recompensas disponíveis com validação de saldo (RN06).
+       */
+      function renderizarDisponiveis(itens, saldo) {
+        const container = document.getElementById("lista-disponiveis");
+        const badgeTotal = document.getElementById("badge-total-disponiveis");
+        if (!container) return;
+
+        if (badgeTotal) {
+          badgeTotal.textContent = `${itens.length} disponível${itens.length === 1 ? "" : "s"}`;
+        }
+
+        if (itens.length === 0) {
+          container.innerHTML = `
+            <div class="col-12">
+              <div class="card-romantic p-4 text-center text-muted">
+                <i class="bi bi-gift fs-1 text-danger mb-2 d-block" aria-hidden="true"></i>
+                <p class="fw-semibold mb-1">Nenhuma recompensa disponível no momento.</p>
+                <p class="small mb-0">Usem o formulário acima para criar ideias de agrados e mimos para resgatar!</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        let html = "";
+        itens.forEach(function (rec) {
+          const podeResgatar = saldo >= rec.custo;
+          const diferenca = rec.custo - saldo;
+
+          html += `
+            <div class="col-12 col-md-6 col-lg-4">
+              <article class="card-romantic h-100 p-4 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                    <h3 class="h5 fw-bold mb-0 text-dark">${escaparHtml(rec.titulo)}</h3>
+                    <span class="badge-pontos flex-shrink-0">
+                      <i class="bi bi-coin me-1" aria-hidden="true"></i>${rec.custo} pts
+                    </span>
+                  </div>
+                  <p class="text-secondary small mb-3">
+                    ${rec.descricao ? escaparHtml(rec.descricao) : "Sem descrição detalhada."}
+                  </p>
+                </div>
+                <div class="pt-3 border-top mt-2">
+                  ${
+                    podeResgatar
+                      ? `<button type="button" class="btn btn-romantic w-100 btn-abrir-resgate" data-id="${rec.id}" data-titulo="${escaparHtml(rec.titulo)}" data-custo="${rec.custo}" data-desc="${escaparHtml(rec.descricao || '')}">
+                           <i class="bi bi-check2-circle me-1" aria-hidden="true"></i>Resgatar
+                         </button>`
+                      : `<button type="button" class="btn btn-bloqueado w-100" disabled aria-disabled="true">
+                           <i class="bi bi-lock-fill me-1" aria-hidden="true"></i>Faltam ${diferenca} pontos
+                         </button>`
+                  }
+                </div>
+              </article>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+
+        // Associa cliques aos botões de resgate
+        const botoesResgatar = container.querySelectorAll(".btn-abrir-resgate");
+        botoesResgatar.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            abrirModalResgate(
+              btn.getAttribute("data-id"),
+              btn.getAttribute("data-titulo"),
+              btn.getAttribute("data-custo"),
+              btn.getAttribute("data-desc")
+            );
+          });
+        });
+      }
+
+      /**
+       * Renderiza cards do histórico de recompensas resgatadas.
+       */
+      function renderizarResgatadas(itens) {
+        const container = document.getElementById("lista-resgatadas");
+        const badgeTotal = document.getElementById("badge-total-resgatadas");
+        if (!container) return;
+
+        if (badgeTotal) {
+          badgeTotal.textContent = `${itens.length} resgatada${itens.length === 1 ? "" : "s"}`;
+        }
+
+        if (itens.length === 0) {
+          container.innerHTML = `
+            <div class="col-12">
+              <div class="card-romantic p-4 text-center text-muted">
+                <i class="bi bi-award fs-1 text-secondary mb-2 d-block" aria-hidden="true"></i>
+                <p class="fw-semibold mb-1">Nenhuma recompensa resgatada ainda.</p>
+                <p class="small mb-0">Concluam desafios juntos para somar pontos e aproveitar os mimos do casal!</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        // Ordena por data de resgate decrescente
+        const ordenadas = [...itens].sort((a, b) => new Date(b.resgatadaEm || 0) - new Date(a.resgatadaEm || 0));
+
+        let html = "";
+        ordenadas.forEach(function (rec) {
+          const dataFormatada = rec.resgatadaEm 
+            ? new Date(rec.resgatadaEm).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+            : "Data não registrada";
+
+          html += `
+            <div class="col-12 col-md-6 col-lg-4">
+              <article class="card-romantic h-100 p-4 border-start border-4 border-success d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                    <h3 class="h5 fw-bold mb-0 text-dark">${escaparHtml(rec.titulo)}</h3>
+                    <span class="badge-resgatada flex-shrink-0">
+                      <i class="bi bi-check-all me-1" aria-hidden="true"></i>Resgatada
+                    </span>
+                  </div>
+                  <p class="text-secondary small mb-3">
+                    ${rec.descricao ? escaparHtml(rec.descricao) : "Sem descrição detalhada."}
+                  </p>
+                </div>
+                <div class="pt-2 border-top mt-2 d-flex justify-content-between align-items-center text-muted small">
+                  <span><i class="bi bi-calendar3 me-1" aria-hidden="true"></i>${dataFormatada}</span>
+                  <span class="fw-bold text-dark"><i class="bi bi-coin text-warning me-1" aria-hidden="true"></i>${rec.custo} pts</span>
+                </div>
+              </article>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      /**
+       * Manipula a submissão do formulário de criação de recompensa.
+       */
+      function criarRecompensaHandler() {
+        const inputTitulo = document.getElementById("titulo-recompensa");
+        const inputCusto = document.getElementById("custo-recompensa");
+        const inputDesc = document.getElementById("descricao-recompensa");
+
+        const titulo = inputTitulo.value.trim();
+        const custo = Number(inputCusto.value);
+        const descricao = inputDesc.value.trim();
+
+        // Validação HTML5
+        if (!titulo) {
+          inputTitulo.classList.add("is-invalid");
+          inputTitulo.focus();
+          return;
+        } else {
+          inputTitulo.classList.remove("is-invalid");
+        }
+
+        if (!custo || isNaN(custo) || custo <= 0) {
+          inputCusto.classList.add("is-invalid");
+          inputCusto.focus();
+          return;
+        } else {
+          inputCusto.classList.remove("is-invalid");
+        }
+
+        try {
+          window.Recompensas.criar({ titulo, descricao, custo });
+          exibirAlerta("Recompensa cadastrada com sucesso! Já está disponível para resgate.", "success");
+          inputTitulo.value = "";
+          inputCusto.value = "";
+          inputDesc.value = "";
+          atualizarTela();
+        } catch (erro) {
+          exibirAlerta(erro.mensagem || erro.message || "Erro ao cadastrar recompensa.", "danger");
+        }
+      }
+
+      /**
+       * Abre o modal de confirmação para o resgate de uma recompensa.
+       */
+      function abrirModalResgate(id, titulo, custo, desc) {
+        recompensaIdParaResgate = id;
+        const elTitulo = document.getElementById("modal-recompensa-titulo");
+        const elCusto = document.getElementById("modal-recompensa-custo");
+        const elDesc = document.getElementById("modal-recompensa-desc");
+
+        if (elTitulo) elTitulo.textContent = titulo;
+        if (elCusto) elCusto.textContent = custo;
+        if (elDesc) elDesc.textContent = desc || "Sem detalhes adicionais.";
+
+        if (modalResgateInstance) {
+          modalResgateInstance.show();
+        } else {
+          // Fallback nativo
+          if (confirm(`Deseja resgatar "${titulo}" por ${custo} pontos?`)) {
+            efetuarResgate(id);
+          }
+        }
+      }
+
+      /**
+       * Efetua o resgate chamando Recompensas.resgatar (RN06).
+       */
+      function efetuarResgate(id) {
+        try {
+          const resgatada = window.Recompensas.resgatar(id);
+          if (modalResgateInstance) {
+            modalResgateInstance.hide();
+          }
+          exibirAlerta(`Parabéns! Recompensa "${resgatada.titulo}" resgatada com sucesso! Aproveitem o momento a dois ❤️`, "success");
+          recompensaIdParaResgate = null;
+          atualizarTela();
+        } catch (erro) {
+          if (modalResgateInstance) {
+            modalResgateInstance.hide();
+          }
+          exibirAlerta(erro.mensagem || erro.message || "Erro ao resgatar recompensa.", "danger");
+        }
+      }
+
+      /**
+       * Exibe alertas visuais acessíveis no topo da tela.
+       */
+      function exibirAlerta(mensagem, tipo = "info", autoHide = true) {
+        const alertaEl = document.getElementById("alerta-global");
+        if (!alertaEl) return;
+
+        alertaEl.className = `alert alert-${tipo} alert-dismissible fade show rounded-3 shadow-sm mb-4`;
+        alertaEl.innerHTML = `
+          <div class="d-flex align-items-center justify-content-between">
+            <div>${mensagem}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+          </div>
+        `;
+        alertaEl.classList.remove("d-none");
+
+        if (autoHide) {
+          setTimeout(function () {
+            alertaEl.classList.add("d-none");
+          }, 6000);
+        }
+      }
+
+      /**
+       * Sanitização básica para evitar injeção de HTML no DOM.
+       */
+      function escaparHtml(texto) {
+        if (!texto) return "";
+        return String(texto)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+    })();
+  </script>
+</body>
+</html>

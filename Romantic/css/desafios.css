@@ -1,0 +1,37 @@
+/**
+ * Arquivo: css/desafios.css
+ * Dono: Unidade 3 (Desafios, Conclusão e Memórias)
+ * Contrato / Propósito:
+ * - Estilização de desafios em andamento (status "ACEITO") e finalizados ("CONCLUIDO").
+ * - Preview de imagem e contêiner para memórias fotográficas (base64 ≤ 300 KB).
+ * - Indicadores visuais de ofensiva e badges de conclusão com data e autor.
+ */
+
+/* Desafios em Andamento e Concluídos */
+.card-desafio {
+  border-left: 5px solid var(--rmt-primary);
+  border-radius: var(--rmt-radius);
+  background: var(--rmt-white);
+  box-shadow: var(--rmt-shadow);
+}
+
+.card-desafio.concluido {
+  border-left-color: var(--rmt-success);
+}
+
+/* Área de Upload e Preview de Memória */
+.memoria-preview {
+  max-width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: var(--rmt-radius-sm);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.badge-ofensiva {
+  background-color: #FFF3E0;
+  color: #E65100;
+  border-radius: 20px;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+}

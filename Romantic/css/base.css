@@ -1,0 +1,93 @@
+/**
+ * Arquivo: css/base.css
+ * Dono: Unidade 1 (Fundação e Identidade Visual)
+ * Contrato / Propósito:
+ * - Define variáveis de tema (paleta rosa #E91E63, #FCE4EC, #212121, #757575, #FFFFFF).
+ * - Define tipografia global (Poppins), cantos arredondados (12px/16px) e sombras suaves.
+ * - Garante contraste acessível (WCAG 2.1 AA) e anel de foco visível.
+ * - Componentes transversais: botões estilizados, navbar, rodapé e cards padrão.
+ */
+
+:root {
+  --rmt-primary: #E91E63;
+  --rmt-primary-dark: #C2185B;
+  --rmt-primary-light: #FCE4EC;
+  --rmt-text-primary: #212121;
+  --rmt-text-secondary: #616161;
+  --rmt-bg: #FAFAFA;
+  --rmt-white: #FFFFFF;
+  --rmt-success: #2E7D32;
+  --rmt-warning: #F57C00;
+  --rmt-radius-sm: 8px;
+  --rmt-radius: 14px;
+  --rmt-radius-lg: 20px;
+  --rmt-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --rmt-shadow: 0 6px 18px rgba(233, 30, 99, 0.08);
+  --rmt-shadow-hover: 0 10px 25px rgba(233, 30, 99, 0.15);
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--rmt-text-primary);
+  background-color: var(--rmt-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Indicador de foco acessível (WCAG 2.1 AA) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--rmt-primary);
+  outline-offset: 2px;
+}
+
+/* Estilos de Botões */
+.btn-romantic {
+  background-color: var(--rmt-primary);
+  border-color: var(--rmt-primary);
+  color: var(--rmt-white);
+  border-radius: var(--rmt-radius);
+  font-weight: 500;
+  padding: 0.6rem 1.4rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-romantic:hover,
+.btn-romantic:focus {
+  background-color: var(--rmt-primary-dark);
+  border-color: var(--rmt-primary-dark);
+  color: var(--rmt-white);
+  box-shadow: var(--rmt-shadow);
+  transform: translateY(-1px);
+}
+
+.btn-romantic-outline {
+  background-color: transparent;
+  border: 2px solid var(--rmt-primary);
+  color: var(--rmt-primary);
+  border-radius: var(--rmt-radius);
+  font-weight: 500;
+  padding: 0.55rem 1.35rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-romantic-outline:hover,
+.btn-romantic-outline:focus {
+  background-color: var(--rmt-primary);
+  color: var(--rmt-white);
+}
+
+/* Cards Padrão */
+.card-romantic {
+  background-color: var(--rmt-white);
+  border: 1px solid rgba(233, 30, 99, 0.12);
+  border-radius: var(--rmt-radius);
+  box-shadow: var(--rmt-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-romantic:hover {
+  box-shadow: var(--rmt-shadow-hover);
+}

@@ -1,0 +1,854 @@
+<!-- pages/perfil.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Romantic — Perfil do Casal</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- CSS Base do projeto (caminho estritamente relativo) -->
+  <link rel="stylesheet" href="../css/base.css">
+
+  <style>
+    :root {
+      --romantic-primary: #E91E63;
+      --romantic-primary-hover: #D81B60;
+      --romantic-bg-soft: #FCE4EC;
+      --romantic-bg: #FAFAFA;
+      --romantic-text: #212121;
+      --romantic-muted: #616161;
+      --romantic-points: #F57C00;
+      --romantic-streak: #D84315;
+      --romantic-success: #2E7D32;
+    }
+
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--romantic-bg);
+      color: var(--romantic-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Foco acessível WCAG AA */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--romantic-primary) !important;
+      outline-offset: 2px !important;
+    }
+
+    .navbar-romantic {
+      background-color: #ffffff;
+      border-bottom: 1px solid rgba(233, 30, 99, 0.15);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--romantic-primary) !important;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link.active {
+      color: var(--romantic-primary) !important;
+      font-weight: 600;
+    }
+
+    .card-romantic {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.08);
+      background-color: #ffffff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-romantic:hover {
+      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.12);
+    }
+
+    .banner-perfil {
+      background: linear-gradient(135deg, #FCE4EC 0%, #FFF0F5 100%);
+      border: 1px solid rgba(233, 30, 99, 0.2);
+      border-radius: 20px;
+    }
+
+    .avatar-circulo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--romantic-primary) 0%, #FF4081 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(233, 30, 99, 0.25);
+    }
+
+    .metric-box {
+      background-color: #ffffff;
+      border-radius: 14px;
+      padding: 1.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      text-align: center;
+    }
+
+    .memoria-foto {
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .memoria-foto:hover {
+      opacity: 0.95;
+    }
+
+    .btn-romantic {
+      background-color: var(--romantic-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 500;
+      padding: 0.55rem 1.25rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-romantic:hover, .btn-romantic:focus {
+      background-color: var(--romantic-primary-hover);
+      color: #ffffff;
+    }
+
+    .footer-romantic {
+      background-color: #ffffff;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      margin-top: auto;
+      padding: 1.5rem 0;
+      color: var(--romantic-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegação -->
+  <header id="layout-header">
+    <nav class="navbar navbar-expand-lg navbar-romantic py-3" aria-label="Navegação principal">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard.html">
+          <i class="bi bi-heart-pulse-fill text-danger fs-4" aria-hidden="true"></i>
+          <span>Romantic</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" 
+                aria-controls="navContent" aria-expanded="false" aria-label="Alternar navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">
+                <i class="bi bi-speedometer2 me-1" aria-hidden="true"></i>Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="explorar.html">
+                <i class="bi bi-compass me-1" aria-hidden="true"></i>Explorar Ideias
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="desafios.html">
+                <i class="bi bi-flag me-1" aria-hidden="true"></i>Desafios
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="recompensas.html">
+                <i class="bi bi-gift me-1" aria-hidden="true"></i>Recompensas
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="perfil.html">
+                <i class="bi bi-person-heart me-1" aria-hidden="true"></i>Perfil
+              </a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center gap-3">
+            <button id="btn-top-logout" class="btn btn-outline-danger btn-sm rounded-pill px-3" type="button">
+              <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>Sair
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container my-4 my-md-5">
+
+    <!-- Alertas Globais -->
+    <div id="alerta-perfil" class="d-none" role="alert" aria-live="polite"></div>
+
+    <!-- Banner Principal do Perfil do Casal -->
+    <section class="banner-perfil p-4 p-md-5 mb-5 shadow-sm" aria-labelledby="titulo-perfil">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-md-8">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-danger rounded-pill px-3 py-1">Vínculo Ativo</span>
+            <span id="tempo-juntos-badge" class="text-secondary small fw-semibold"></span>
+          </div>
+          <h1 id="titulo-perfil" class="display-6 fw-bold mb-2">
+            <span id="apelido-casal">Nosso Cantinho</span> ❤️
+          </h1>
+          <p id="descricao-vencimento" class="text-secondary mb-0">
+            Juntos cultivando momentos inesquecíveis, desafios e muito carinho no dia a dia.
+          </p>
+        </div>
+
+        <div class="col-12 col-md-4 text-md-end">
+          <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+            <button id="btn-logout" class="btn btn-outline-secondary rounded-pill px-3 py-2" type="button">
+              <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>Sair da Conta
+            </button>
+            <button id="btn-abrir-modal-reset" class="btn btn-outline-danger rounded-pill px-3 py-2" type="button">
+              <i class="bi bi-trash3 me-1" aria-hidden="true"></i>Limpar Dados de Demonstração
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dados dos Parceiros e Estatísticas -->
+    <div class="row g-4 mb-5">
+
+      <!-- Coluna: Dados dos Dois Parceiros -->
+      <div class="col-12 col-lg-7">
+        <section class="card-romantic p-4 h-100" aria-labelledby="titulo-parceiros">
+          <div class="d-flex align-items-center gap-2 mb-4">
+            <i class="bi bi-people-fill text-danger fs-4" aria-hidden="true"></i>
+            <h2 id="titulo-parceiros" class="h4 fw-bold mb-0">Os Parceiros</h2>
+          </div>
+
+          <div class="row g-3">
+            <!-- Card Parceiro 1 (Você) -->
+            <div class="col-12 col-sm-6">
+              <div class="p-3 rounded-4 bg-light border h-100 position-relative">
+                <span class="badge bg-danger position-absolute top-0 end-0 m-3">Você</span>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="avatar-circulo" id="avatar-usuario">?</div>
+                  <div>
+                    <h3 class="h6 fw-bold mb-0" id="nome-usuario">Carregando...</h3>
+                    <span class="small text-muted" id="email-usuario">---</span>
+                  </div>
+                </div>
+                <div class="small text-secondary border-top pt-2 mt-2">
+                  <div class="d-flex justify-content-between">
+                    <span>Nascimento:</span>
+                    <strong class="text-dark" id="nasc-usuario">--/--/----</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Parceiro 2 (Seu Par) -->
+            <div class="col-12 col-sm-6">
+              <div class="p-3 rounded-4 bg-light border h-100 position-relative" id="container-parceiro">
+                <span class="badge bg-secondary position-absolute top-0 end-0 m-3" id="badge-parceiro">Seu Amor</span>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="avatar-circulo" id="avatar-parceiro" style="background: linear-gradient(135deg, #7B1FA2 0%, #BA68C8 100%);">?</div>
+                  <div>
+                    <h3 class="h6 fw-bold mb-0" id="nome-parceiro">Carregando...</h3>
+                    <span class="small text-muted" id="email-parceiro">---</span>
+                  </div>
+                </div>
+                <div class="small text-secondary border-top pt-2 mt-2">
+                  <div class="d-flex justify-content-between">
+                    <span>Nascimento:</span>
+                    <strong class="text-dark" id="nasc-parceiro">--/--/----</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informações de Tempo Juntos -->
+          <div class="mt-4 p-3 rounded-3 bg-white border border-danger-subtle d-flex align-items-center gap-3">
+            <i class="bi bi-calendar-heart text-danger fs-2" aria-hidden="true"></i>
+            <div>
+              <span class="text-muted small fw-semibold text-uppercase d-block">História a Dois</span>
+              <span class="fw-bold text-dark fs-6" id="tempo-juntos-texto">Carregando tempo juntos...</span>
+              <span class="d-block text-secondary small" id="data-inicio-vinculo"></span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Coluna: Métricas (Pontos e Ofensiva) -->
+      <div class="col-12 col-lg-5">
+        <section class="card-romantic p-4 h-100 d-flex flex-column justify-content-between" aria-labelledby="titulo-metricas">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-4">
+              <i class="bi bi-trophy-fill text-warning fs-4" aria-hidden="true"></i>
+              <h2 id="titulo-metricas" class="h4 fw-bold mb-0">Conquistas e Gamificação</h2>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <!-- Ofensiva Diária (Streak) -->
+              <div class="col-6">
+                <div class="metric-box bg-light">
+                  <span class="d-block text-muted small fw-bold text-uppercase">Ofensiva</span>
+                  <div class="d-flex align-items-center justify-content-center gap-1 my-1">
+                    <span class="fs-1 fw-bold text-danger" id="perfil-ofensiva">0</span>
+                    <span class="fs-3">🔥</span>
+                  </div>
+                  <span class="small text-secondary">dias seguidos</span>
+                </div>
+              </div>
+
+              <!-- Saldo Atual de Pontos -->
+              <div class="col-6">
+                <div class="metric-box bg-light">
+                  <span class="d-block text-muted small fw-bold text-uppercase">Saldo</span>
+                  <div class="d-flex align-items-center justify-content-center gap-1 my-1">
+                    <span class="fs-1 fw-bold text-warning" id="perfil-saldo">0</span>
+                  </div>
+                  <span class="small text-secondary">pontos livres</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dados Complementares de Pontuação -->
+            <ul class="list-group list-group-flush small">
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <span class="text-muted"><i class="bi bi-coin me-2 text-warning" aria-hidden="true"></i>Total Histórico Conquistado:</span>
+                <strong class="text-dark" id="perfil-acumulado">0 pts</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <span class="text-muted"><i class="bi bi-check2-all me-2 text-success" aria-hidden="true"></i>Atividades Concluídas:</span>
+                <strong class="text-dark" id="perfil-total-concluidos">0</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <span class="text-muted"><i class="bi bi-clock-history me-2 text-info" aria-hidden="true"></i>Última Conclusão:</span>
+                <strong class="text-dark" id="perfil-ultima-conclusao">Nenhuma ainda</strong>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-3 border-top mt-3 text-center">
+            <a href="recompensas.html" class="btn btn-romantic w-100">
+              <i class="bi bi-gift-fill me-2" aria-hidden="true"></i>Ver e Resgatar Recompensas
+            </a>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <!-- Seção: Galeria de Memórias Afetivas e Histórico de Atividades -->
+    <section class="mb-5" aria-labelledby="titulo-memorias">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 id="titulo-memorias" class="h4 fw-bold mb-1">
+            <i class="bi bi-camera-fill me-2 text-danger" aria-hidden="true"></i>Memórias Afetivas do Casal
+          </h2>
+          <p class="text-muted small mb-0">Registros de carinho, fotos e reflexões das atividades concluídas juntos.</p>
+        </div>
+        <span id="badge-total-memorias" class="badge rounded-pill bg-light text-dark border px-3 py-2">
+          0 memórias
+        </span>
+      </div>
+
+      <div id="container-memorias" class="row g-4" aria-live="polite">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal para Visualização de Foto Ampliada -->
+  <div class="modal fade" id="modalFotoAmpliada" tabindex="-1" aria-labelledby="modalFotoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 rounded-4 overflow-hidden shadow">
+        <div class="modal-header border-0 pb-0">
+          <h1 class="modal-title fs-5 fw-bold" id="modalFotoLabel">Memória Afetiva</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body text-center p-3">
+          <img id="img-ampliada" src="" alt="Foto ampliada da memória afetiva" class="img-fluid rounded-3 mb-2" style="max-height: 80vh;">
+          <p id="legenda-foto-ampliada" class="text-secondary small fst-italic mb-0"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação para Limpeza de Dados de Demonstração (Store.resetar) -->
+  <div class="modal fade" id="modalConfirmarReset" tabindex="-1" aria-labelledby="modalResetLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow">
+        <div class="modal-header border-0 pb-0">
+          <h1 class="modal-title fs-5 fw-bold text-danger" id="modalResetLabel">
+            <i class="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i>Limpar Dados de Demonstração?
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body py-4">
+          <p class="mb-3">
+            Esta ação executará o <code>Store.resetar()</code> e apagará <strong>todos</strong> os registros salvos no seu navegador:
+          </p>
+          <ul class="small text-muted mb-3">
+            <li>Usuários cadastrados e sessões ativas;</li>
+            <li>Vínculos de casal e convites;</li>
+            <li>Desafios aceitos, concluídos e memórias registradas;</li>
+            <li>Recompensas e pontuações acumuladas.</li>
+          </ul>
+          <p class="fw-semibold text-danger small mb-0">
+            Tem certeza de que deseja restaurar o aplicativo para o estado inicial vazio?
+          </p>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-outline-secondary rounded-3 px-3" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger rounded-3 px-4" id="btn-confirmar-reset-final">
+            Sim, Limpar Tudo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé Semântico -->
+  <footer class="footer-romantic text-center" id="layout-footer">
+    <div class="container">
+      <p class="mb-1 fw-semibold text-danger">Romantic &copy; 2026</p>
+      <p class="mb-0 small">Para continuar escolhendo depois do match. Alinhado aos ODS 3 e ODS 5 da ONU.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts: Bootstrap Bundle CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Módulos do Sistema (caminhos estritamente relativos, sem barra inicial) -->
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/casal.js"></script>
+  <script src="../js/desafios.js"></script>
+  <script src="../js/pontuacao.js"></script>
+  <script src="../js/recompensas.js"></script>
+  <script src="../js/layout.js"></script>
+
+  <!-- Lógica da Página de Perfil -->
+  <script>
+    (function () {
+      "use strict";
+
+      let modalResetInstance = null;
+      let modalFotoInstance = null;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Aplica RN01: Exige login ativo
+        if (window.Auth && typeof window.Auth.exigirLogin === "function") {
+          window.Auth.exigirLogin("login.html");
+        }
+
+        const usuario = window.Auth ? window.Auth.usuarioAtual() : null;
+        if (!usuario) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Layout compartilhado se disponível
+        if (window.Layout && typeof window.Layout.montar === "function") {
+          window.Layout.montar({ paginaAtiva: "perfil" });
+        }
+
+        // Inicializa Modais
+        const modalResetEl = document.getElementById("modalConfirmarReset");
+        if (modalResetEl && window.bootstrap) {
+          modalResetInstance = new window.bootstrap.Modal(modalResetEl);
+        }
+
+        const modalFotoEl = document.getElementById("modalFotoAmpliada");
+        if (modalFotoEl && window.bootstrap) {
+          modalFotoInstance = new window.bootstrap.Modal(modalFotoEl);
+        }
+
+        // Eventos de Logout
+        const btnLogout = document.getElementById("btn-logout");
+        const btnTopLogout = document.getElementById("btn-top-logout");
+        const executarLogout = function () {
+          if (window.Auth && typeof window.Auth.logout === "function") {
+            window.Auth.logout();
+          }
+          window.location.href = "login.html";
+        };
+
+        if (btnLogout) btnLogout.addEventListener("click", executarLogout);
+        if (btnTopLogout) btnTopLogout.addEventListener("click", executarLogout);
+
+        // Abertura do Modal de Limpeza de Demonstração
+        const btnAbrirReset = document.getElementById("btn-abrir-modal-reset");
+        if (btnAbrirReset) {
+          btnAbrirReset.addEventListener("click", function () {
+            if (modalResetInstance) {
+              modalResetInstance.show();
+            } else {
+              if (confirm("Deseja realmente limpar todos os dados de demonstração (Store.resetar())?")) {
+                executarResetDados();
+              }
+            }
+          });
+        }
+
+        // Confirmação final da Limpeza (Store.resetar com confirmação)
+        const btnConfirmarReset = document.getElementById("btn-confirmar-reset-final");
+        if (btnConfirmarReset) {
+          btnConfirmarReset.addEventListener("click", function () {
+            executarResetDados();
+          });
+        }
+
+        // Carrega dados na interface
+        carregarDadosPerfil(usuario);
+      });
+
+      /**
+       * Carrega dados dos parceiros, tempo de união, pontuação e memórias.
+       */
+      function carregarDadosPerfil(usuario) {
+        // Dados do Usuário Atual (Você)
+        const elNomeUser = document.getElementById("nome-usuario");
+        const elEmailUser = document.getElementById("email-usuario");
+        const elNascUser = document.getElementById("nasc-usuario");
+        const elAvatarUser = document.getElementById("avatar-usuario");
+
+        if (elNomeUser) elNomeUser.textContent = usuario.nome;
+        if (elEmailUser) elEmailUser.textContent = usuario.email;
+        if (elNascUser) elNascUser.textContent = formatarData(usuario.dataNascimento);
+        if (elAvatarUser) elAvatarUser.textContent = (usuario.nome || "U").charAt(0).toUpperCase();
+
+        // Dados do Casal e Parceiro
+        let casal = null;
+        let parceiro = null;
+
+        if (window.Casal) {
+          casal = typeof window.Casal.casalAtual === "function" ? window.Casal.casalAtual() : null;
+          parceiro = typeof window.Casal.parceiro === "function" ? window.Casal.parceiro() : null;
+        }
+
+        const elApelido = document.getElementById("apelido-casal");
+        const elTempoBadge = document.getElementById("tempo-juntos-badge");
+        const elTempoTexto = document.getElementById("tempo-juntos-texto");
+        const elDataInicio = document.getElementById("data-inicio-vinculo");
+
+        const elNomeParceiro = document.getElementById("nome-parceiro");
+        const elEmailParceiro = document.getElementById("email-parceiro");
+        const elNascParceiro = document.getElementById("nasc-parceiro");
+        const elAvatarParceiro = document.getElementById("avatar-parceiro");
+
+        if (casal) {
+          if (elApelido) elApelido.textContent = casal.apelido || "Nosso Cantinho";
+
+          // Cálculo do Tempo Juntos
+          const tempoFormatado = formatarTempoJuntos(casal.criadoEm);
+          if (elTempoBadge) elTempoBadge.textContent = tempoFormatado;
+          if (elTempoTexto) elTempoTexto.textContent = tempoFormatado;
+          if (elDataInicio && casal.criadoEm) {
+            elDataInicio.textContent = `Unidos desde ${new Date(casal.criadoEm).toLocaleDateString("pt-BR")}`;
+          }
+
+          if (parceiro) {
+            if (elNomeParceiro) elNomeParceiro.textContent = parceiro.nome;
+            if (elEmailParceiro) elEmailParceiro.textContent = parceiro.email;
+            if (elNascParceiro) elNascParceiro.textContent = formatarData(parceiro.dataNascimento);
+            if (elAvatarParceiro) elAvatarParceiro.textContent = (parceiro.nome || "P").charAt(0).toUpperCase();
+          } else {
+            renderizarSemParceiro();
+          }
+        } else {
+          // Sem casal ativo (RN02)
+          if (elApelido) elApelido.textContent = "Perfil Pessoal";
+          if (elTempoBadge) elTempoBadge.textContent = "Aguardando vínculo";
+          if (elTempoTexto) elTempoTexto.textContent = "Você ainda não formou um casal ativo.";
+          renderizarSemParceiro();
+        }
+
+        // Métricas de Gamificação (RN05 e RN06)
+        carregarMetricas(casal);
+
+        // Memórias Afetivas (Desafios Concluídos com Memória)
+        carregarMemorias(casal);
+      }
+
+      /**
+       * Carrega e exibe métricas de ofensiva e pontuação do casal.
+       */
+      function carregarMetricas(casal) {
+        let saldo = 0;
+        let acumulado = 0;
+        let ofensiva = 0;
+        let ultimaConclusao = null;
+
+        if (casal && window.Pontuacao) {
+          if (typeof window.Pontuacao.total === "function") saldo = window.Pontuacao.total();
+          if (typeof window.Pontuacao.acumulado === "function") acumulado = window.Pontuacao.acumulado();
+          if (typeof window.Pontuacao.ofensiva === "function") ofensiva = window.Pontuacao.ofensiva();
+          if (typeof window.Pontuacao.ultimaConclusao === "function") ultimaConclusao = window.Pontuacao.ultimaConclusao();
+        }
+
+        const elSaldo = document.getElementById("perfil-saldo");
+        const elAcumulado = document.getElementById("perfil-acumulado");
+        const elOfensiva = document.getElementById("perfil-ofensiva");
+        const elUltima = document.getElementById("perfil-ultima-conclusao");
+
+        if (elSaldo) elSaldo.textContent = saldo;
+        if (elAcumulado) elAcumulado.textContent = `${acumulado} pts`;
+        if (elOfensiva) elOfensiva.textContent = ofensiva;
+
+        if (elUltima) {
+          if (ultimaConclusao) {
+            const dataObj = new Date(ultimaConclusao);
+            elUltima.textContent = dataObj.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+          } else {
+            elUltima.textContent = "Nenhuma conclusão ainda";
+          }
+        }
+      }
+
+      /**
+       * Carrega e exibe a galeria de memórias e histórico de atividades concluídas.
+       */
+      function carregarMemorias(casal) {
+        const container = document.getElementById("container-memorias");
+        const badgeTotal = document.getElementById("badge-total-memorias");
+        const elTotalConcluidos = document.getElementById("perfil-total-concluidos");
+        if (!container) return;
+
+        if (!casal) {
+          container.innerHTML = `
+            <div class="col-12">
+              <div class="card-romantic p-4 text-center text-muted">
+                <i class="bi bi-heartbreak fs-1 text-danger mb-2 d-block" aria-hidden="true"></i>
+                <p class="fw-semibold mb-1">Vincule seu parceiro para visualizar as memórias do casal.</p>
+                <a href="vinculo.html" class="btn btn-romantic btn-sm mt-2">Ir para Vínculo</a>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        let desafiosConcluidos = [];
+        if (window.Desafios && typeof window.Desafios.listar === "function") {
+          try {
+            desafiosConcluidos = window.Desafios.listar("CONCLUIDO");
+          } catch (e) {
+            console.error("Erro ao listar desafios concluídos:", e);
+          }
+        }
+
+        if (elTotalConcluidos) {
+          elTotalConcluidos.textContent = desafiosConcluidos.length;
+        }
+
+        if (badgeTotal) {
+          badgeTotal.textContent = `${desafiosConcluidos.length} concluída${desafiosConcluidos.length === 1 ? "" : "s"}`;
+        }
+
+        if (desafiosConcluidos.length === 0) {
+          container.innerHTML = `
+            <div class="col-12">
+              <div class="card-romantic p-5 text-center text-muted">
+                <i class="bi bi-camera fs-1 text-danger mb-2 d-block" aria-hidden="true"></i>
+                <h3 class="h5 fw-bold text-dark mb-1">Nenhuma memória registrada ainda</h3>
+                <p class="small text-secondary mb-3">
+                  Quando vocês concluírem um desafio e registrarem uma foto ou mensagem carinhosa, ela aparecerá aqui nesta galeria!
+                </p>
+                <a href="desafios.html" class="btn btn-romantic px-4 py-2">
+                  <i class="bi bi-flag me-1" aria-hidden="true"></i>Ver Desafios Ativos
+                </a>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        // Ordena por conclusão mais recente
+        const ordenados = [...desafiosConcluidos].sort(function (a, b) {
+          return new Date(b.concluidoEm || 0) - new Date(a.concluidoEm || 0);
+        });
+
+        let html = "";
+        ordenados.forEach(function (desafio) {
+          const memoria = desafio.memoria || {};
+          const temFoto = Boolean(memoria.foto);
+          const temMensagem = Boolean(memoria.mensagem && memoria.mensagem.trim());
+          const dataConclusao = desafio.concluidoEm 
+            ? new Date(desafio.concluidoEm).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+            : "Data não registrada";
+
+          html += `
+            <div class="col-12 col-md-6 col-lg-4">
+              <article class="card-romantic h-100 overflow-hidden d-flex flex-column justify-content-between">
+                <div>
+                  ${
+                    temFoto 
+                      ? `<img src="${memoria.foto}" alt="Memória afetiva: ${escaparHtml(desafio.titulo)}" 
+                              class="memoria-foto btn-abrir-foto" data-foto="${memoria.foto}" data-titulo="${escaparHtml(desafio.titulo)}" data-desc="${escaparHtml(memoria.mensagem || '')}">`
+                      : `<div class="bg-light p-4 text-center border-bottom text-muted">
+                           <i class="bi bi-heart-fill fs-2 text-danger opacity-50" aria-hidden="true"></i>
+                         </div>`
+                  }
+
+                  <div class="p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
+                        <i class="bi bi-check-circle-fill me-1" aria-hidden="true"></i>Concluído
+                      </span>
+                      <span class="fw-bold text-warning small">
+                        <i class="bi bi-coin me-1" aria-hidden="true"></i>+${desafio.pontos} pts
+                      </span>
+                    </div>
+
+                    <h3 class="h5 fw-bold text-dark mb-2">${escaparHtml(desafio.titulo)}</h3>
+
+                    ${
+                      temMensagem
+                        ? `<blockquote class="blockquote small text-secondary bg-light p-3 rounded-3 border-start border-3 border-danger mb-0 fst-italic">
+                             "${escaparHtml(memoria.mensagem)}"
+                           </blockquote>`
+                        : `<p class="small text-muted fst-italic mb-0">Atividade concluída com sucesso!</p>`
+                    }
+                  </div>
+                </div>
+
+                <div class="p-3 bg-light border-top text-muted small d-flex justify-content-between align-items-center">
+                  <span><i class="bi bi-calendar3 me-1" aria-hidden="true"></i>${dataConclusao}</span>
+                  <span class="badge rounded-pill bg-white text-secondary border">Memória</span>
+                </div>
+              </article>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+
+        // Associa clique para ampliar fotos
+        const fotosBotoes = container.querySelectorAll(".btn-abrir-foto");
+        fotosBotoes.forEach(function (imgEl) {
+          imgEl.addEventListener("click", function () {
+            const fotoSrc = imgEl.getAttribute("data-foto");
+            const titulo = imgEl.getAttribute("data-titulo");
+            const desc = imgEl.getAttribute("data-desc");
+
+            const elImgAmpliada = document.getElementById("img-ampliada");
+            const elTituloAmpliada = document.getElementById("modalFotoLabel");
+            const elLegendaAmpliada = document.getElementById("legenda-foto-ampliada");
+
+            if (elImgAmpliada) elImgAmpliada.src = fotoSrc;
+            if (elTituloAmpliada) elTituloAmpliada.textContent = titulo;
+            if (elLegendaAmpliada) elLegendaAmpliada.textContent = desc ? `"${desc}"` : "";
+
+            if (modalFotoInstance) modalFotoInstance.show();
+          });
+        });
+      }
+
+      /**
+       * Renderiza o card do parceiro quando ainda não há vínculo.
+       */
+      function renderizarSemParceiro() {
+        const container = document.getElementById("container-parceiro");
+        if (container) {
+          container.innerHTML = `
+            <div class="text-center py-3">
+              <i class="bi bi-person-plus text-secondary fs-1 mb-2 d-block" aria-hidden="true"></i>
+              <h3 class="h6 fw-bold mb-1">Nenhum parceiro vinculado</h3>
+              <p class="small text-muted mb-3">Envie um convite por e-mail para conectar seu amor.</p>
+              <a href="vinculo.html" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                <i class="bi bi-link-45deg me-1" aria-hidden="true"></i>Convidar Parceiro
+              </a>
+            </div>
+          `;
+        }
+      }
+
+      /**
+       * Executa o reset completo dos dados chamando Store.resetar() e redireciona.
+       */
+      function executarResetDados() {
+        try {
+          if (window.Store && typeof window.Store.resetar === "function") {
+            window.Store.resetar();
+          }
+          if (modalResetInstance) {
+            modalResetInstance.hide();
+          }
+          alert("Todos os dados de demonstração foram limpos com sucesso. Você será redirecionado para o login.");
+          window.location.href = "login.html";
+        } catch (erro) {
+          alert("Erro ao limpar dados: " + (erro.message || erro));
+        }
+      }
+
+      /**
+       * Calcula o tempo decorrido desde a formação do casal.
+       */
+      function formatarTempoJuntos(dataInicioISO) {
+        if (!dataInicioISO) return "Vínculo recente";
+        const inicio = new Date(dataInicioISO);
+        const agora = new Date();
+        const diffMs = Math.max(0, agora.getTime() - inicio.getTime());
+        const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffDias === 0) return "Hoje mesmo! Começando a história ❤️";
+        if (diffDias === 1) return "1 dia juntos";
+        if (diffDias < 30) return `${diffDias} dias juntos`;
+
+        const meses = Math.floor(diffDias / 30);
+        const diasRestantes = diffDias % 30;
+        if (meses === 1) {
+          return diasRestantes > 0 ? `1 mês e ${diasRestantes} dias juntos` : "1 mês juntos";
+        }
+        return diasRestantes > 0 ? `${meses} meses e ${diasRestantes} dias juntos` : `${meses} meses juntos`;
+      }
+
+      /**
+       * Formata data YYYY-MM-DD para DD/MM/AAAA.
+       */
+      function formatarData(dataStr) {
+        if (!dataStr) return "--/--/----";
+        const partes = String(dataStr).split("-");
+        if (partes.length === 3) {
+          return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+        return dataStr;
+      }
+
+      /**
+       * Sanitização contra XSS.
+       */
+      function escaparHtml(texto) {
+        if (!texto) return "";
+        return String(texto)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+    })();
+  </script>
+</body>
+</html>
