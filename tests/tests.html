@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Romantic — Suíte de Testes Automatizados (RN01 a RN08)</title>
+  <title>Testes Automatizados — Romantic</title>
 
   <!-- Google Fonts: Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,169 +14,75 @@
   <!-- Bootstrap 5.3 CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <style>
     :root {
       --romantic-primary: #E91E63;
       --romantic-pass: #2E7D32;
       --romantic-fail: #D32F2F;
-      --romantic-bg: #FAFAFA;
-      --romantic-text: #212121;
     }
 
     body {
       font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: var(--romantic-bg);
-      color: var(--romantic-text);
-      padding-bottom: 3rem;
     }
 
-    /* Foco acessível WCAG AA */
-    a:focus-visible, button:focus-visible {
-      outline: 3px solid var(--romantic-primary) !important;
-      outline-offset: 2px !important;
+    .teste-passou {
+      color: var(--romantic-pass);
+      font-weight: 500;
+      border-left: 5px solid var(--romantic-pass) !important;
     }
 
-    .card-header-tests {
-      background: linear-gradient(135deg, #FCE4EC 0%, #FFF0F5 100%);
-      border-bottom: 1px solid rgba(233, 30, 99, 0.15);
+    .teste-falhou {
+      color: var(--romantic-fail);
+      font-weight: 600;
+      border-left: 5px solid var(--romantic-fail) !important;
     }
 
-    .test-item {
-      border-left: 6px solid #B0BEC5;
-      background-color: #ffffff;
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
-      padding: 0.85rem 1.2rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-      transition: all 0.2s ease;
-    }
-
-    .test-item.pass {
-      border-left-color: var(--romantic-pass);
-    }
-
-    .test-item.fail {
-      border-left-color: var(--romantic-fail);
-      background-color: #FFEBEE;
-    }
-
-    .badge-pass {
+    .badge-status-pass {
       background-color: #E8F5E9;
       color: var(--romantic-pass);
       font-weight: 700;
       border: 1px solid rgba(46, 125, 50, 0.4);
       border-radius: 6px;
-      padding: 0.3em 0.6em;
-      font-size: 0.85rem;
+      padding: 0.25em 0.5em;
+      font-size: 0.8rem;
     }
 
-    .badge-fail {
+    .badge-status-fail {
       background-color: #FFCDD2;
       color: var(--romantic-fail);
       font-weight: 700;
       border: 1px solid rgba(211, 47, 47, 0.4);
       border-radius: 6px;
-      padding: 0.3em 0.6em;
-      font-size: 0.85rem;
-    }
-
-    .summary-card {
-      border-radius: 14px;
-      padding: 1.25rem;
-      text-align: center;
-      background-color: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    }
-
-    .code-error {
-      font-family: monospace;
-      font-size: 0.85rem;
-      color: var(--romantic-fail);
-      margin-top: 0.5rem;
-      word-break: break-all;
+      padding: 0.25em 0.5em;
+      font-size: 0.8rem;
     }
   </style>
 </head>
-<body>
+<body class="bg-light py-4">
 
-  <!-- Topo do Runner de Testes -->
-  <header class="card-header-tests py-4 mb-4 shadow-sm">
-    <div class="container">
-      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-        <div>
-          <div class="d-flex align-items-center gap-2 mb-1">
-            <i class="bi bi-shield-check text-danger fs-3" aria-hidden="true"></i>
-            <h1 class="h3 fw-bold mb-0 text-dark">Suíte de Testes Automatizados — Romantic</h1>
-          </div>
-          <p class="text-secondary small mb-0">
-            Validação automatizada das Regras de Negócio RN01 a RN08 via Spec-Driven Development (SDD).
-          </p>
-        </div>
-        <div>
-          <button id="btn-reexecutar" class="btn btn-danger rounded-pill px-4 py-2 fw-semibold" type="button">
-            <i class="bi bi-arrow-clockwise me-1" aria-hidden="true"></i>Reexecutar Testes
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Container Principal -->
   <main class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+      <div>
+        <h1 class="h3 fw-bold mb-1">
+          <i class="bi bi-shield-check text-danger me-2" aria-hidden="true"></i>Testes Automatizados — Romantic
+        </h1>
+        <p class="text-secondary small mb-0">Validação completa de regras de negócio (RN01 a RN08) com isolamento via Store.resetar()</p>
+      </div>
+      <button id="btn-reexecutar" class="btn btn-danger rounded-pill px-4" onclick="TestRunner.executar()">
+        <i class="bi bi-arrow-clockwise me-1" aria-hidden="true"></i>Reexecutar Testes
+      </button>
+    </div>
 
-    <!-- Painel de Métricas e Resumo -->
-    <section class="row g-3 mb-4" aria-label="Resumo dos Testes">
-      <div class="col-6 col-md-3">
-        <div class="summary-card">
-          <span class="text-muted small fw-bold text-uppercase d-block">Total de Testes</span>
-          <span id="contador-total" class="display-6 fw-bold text-dark">0</span>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="summary-card">
-          <span class="text-muted small fw-bold text-uppercase d-block">Passaram</span>
-          <span id="contador-passou" class="display-6 fw-bold text-success">0</span>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="summary-card">
-          <span class="text-muted small fw-bold text-uppercase d-block">Falharam</span>
-          <span id="contador-falhou" class="display-6 fw-bold text-danger">0</span>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="summary-card">
-          <span class="text-muted small fw-bold text-uppercase d-block">Status Geral</span>
-          <span id="status-geral" class="fs-4 fw-bold text-secondary d-block mt-2">Executando...</span>
-        </div>
-      </div>
-    </section>
+    <!-- Painel de Resumo (ID padrão da equipe) -->
+    <div id="test-summary" aria-live="polite"></div>
 
-    <!-- Barra de Progresso Acessível -->
-    <section class="mb-4" aria-label="Progresso da Execução">
-      <div class="progress" role="progressbar" aria-label="Progresso dos testes" style="height: 12px; border-radius: 6px;">
-        <div id="barra-progresso" class="progress-bar bg-success" style="width: 0%;"></div>
-      </div>
-    </section>
-
-    <!-- Lista de Resultados dos Testes -->
-    <section aria-labelledby="titulo-resultados">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 id="titulo-resultados" class="h5 fw-bold mb-0">Resultados Individuais</h2>
-        <span class="small text-muted">Cada teste executa com <code>Store.resetar()</code> isolado.</span>
-      </div>
-
-      <div id="container-testes" aria-live="polite">
-        <!-- Itens dos testes inseridos via JavaScript -->
-      </div>
-    </section>
-
+    <!-- Lista de Resultados (ID padrão da equipe) -->
+    <div id="test-results" class="list-group shadow-sm mb-4" aria-live="polite"></div>
   </main>
 
-  <!-- Scripts dos Módulos do Romantic (caminhos estritamente relativos) -->
+  <!-- Módulos do Romantic -->
   <script src="../js/storage.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/casal.js"></script>
@@ -186,962 +92,495 @@
   <script src="../js/pontuacao.js"></script>
   <script src="../js/recompensas.js"></script>
 
-  <!-- Salvaguardas Canônicas da SPEC (Garante execução autônoma mesmo antes de mesclagem completa dos colegas) -->
+  <!-- Runner de Testes Expandido para a Unidade 4 -->
   <script>
-    (function (window) {
-      "use strict";
+    // Micro-runner de testes expandido para a Unidade 4
+    const TestRunner = {
+      testes: [],
+      passaram: 0,
+      falharam: 0,
 
-      // 1. Classe RegraViolada da SPEC
-      if (!window.RegraViolada) {
-        window.RegraViolada = class RegraViolada extends Error {
-          constructor(regra, mensagem) {
-            super(`[${regra}] ${mensagem}`);
-            this.name = "RegraViolada";
-            this.regra = regra;
-            this.mensagem = mensagem;
+      registrar(nome, fn) {
+        this.testes.push({ nome, fn });
+      },
+
+      async executar() {
+        const resultsEl = document.getElementById('test-results');
+        const summaryEl = document.getElementById('test-summary');
+        if (!resultsEl || !summaryEl) return;
+
+        resultsEl.innerHTML = '';
+        this.passaram = 0;
+        this.falharam = 0;
+
+        summaryEl.className = 'alert alert-info mb-4';
+        summaryEl.innerHTML = '<strong>Executando suíte de testes...</strong>';
+
+        for (const t of this.testes) {
+          // Garante isolamento estrito com Store limpo antes de cada teste
+          if (window.Store && typeof window.Store.resetar === 'function') {
+            window.Store.resetar();
           }
-        };
-      }
 
-      // 2. Módulo Store da SPEC
-      if (!window.Store) {
-        const CHAVE = "romantic:v1";
-        const estadoVazio = () => ({
-          usuarios: [],
-          sessao: null,
-          convites: [],
-          casais: [],
-          desafios: [],
-          recompensas: []
-        });
-
-        window.Store = {
-          ler() {
-            try {
-              const dados = localStorage.getItem(CHAVE);
-              if (!dados) return this.resetar();
-              return JSON.parse(dados);
-            } catch (e) {
-              return this.resetar();
-            }
-          },
-          salvar(estado) {
-            localStorage.setItem(CHAVE, JSON.stringify(estado));
-          },
-          resetar() {
-            const inicial = estadoVazio();
-            this.salvar(inicial);
-            return inicial;
-          },
-          novoId() {
-            return "id-" + Math.random().toString(36).substr(2, 9) + "-" + Date.now();
-          }
-        };
-      }
-
-      // 3. Função auxiliar de hash SHA-256 via Web Crypto API (ADR 02)
-      async function sha256Hex(mensagem) {
-        const encoder = new TextEncoder();
-        const data = encoder.encode(mensagem);
-        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-      }
-
-      // 4. Módulo Auth da SPEC (Fallback canônico se o colega ainda não entregou)
-      if (!window.Auth) {
-        window.Auth = {
-          async cadastrar({ nome, email, senha, dataNascimento }) {
-            // Aplica RN07: Validação de Cadastro
-            if (!email || !email.includes("@") || !email.includes(".")) {
-              throw new window.RegraViolada("RN07", "E-mail com formato inválido.");
-            }
-            if (!senha || senha.length < 6) {
-              throw new window.RegraViolada("RN07", "A senha deve ter no mínimo 6 caracteres.");
-            }
-            const estado = window.Store.ler();
-            const emailNorm = email.toLowerCase().trim();
-            if (estado.usuarios.some(u => u.email === emailNorm)) {
-              throw new window.RegraViolada("RN07", "E-mail já cadastrado.");
-            }
-            const senhaHash = await sha256Hex(senha);
-            const novoUsuario = {
-              id: window.Store.novoId(),
-              nome: (nome || "Usuário").trim(),
-              email: emailNorm,
-              senhaHash: senhaHash,
-              dataNascimento: dataNascimento || "2000-01-01",
-              casalId: null,
-              criadoEm: new Date().toISOString()
-            };
-            estado.usuarios.push(novoUsuario);
-            estado.sessao = { usuarioId: novoUsuario.id };
-            window.Store.salvar(estado);
-            return novoUsuario;
-          },
-          async login(email, senha) {
-            const estado = window.Store.ler();
-            const emailNorm = (email || "").toLowerCase().trim();
-            const senhaHash = await sha256Hex(senha);
-            const usuario = estado.usuarios.find(u => u.email === emailNorm && u.senhaHash === senhaHash);
-            if (!usuario) {
-              throw new Error("Credenciais inválidas.");
-            }
-            estado.sessao = { usuarioId: usuario.id };
-            window.Store.salvar(estado);
-            return usuario;
-          },
-          logout() {
-            const estado = window.Store.ler();
-            estado.sessao = null;
-            window.Store.salvar(estado);
-          },
-          usuarioAtual() {
-            const estado = window.Store.ler();
-            if (!estado.sessao || !estado.sessao.usuarioId) return null;
-            return estado.usuarios.find(u => u.id === estado.sessao.usuarioId) || null;
-          },
-          exigirLogin(caminho = "login.html") {
-            const user = this.usuarioAtual();
-            if (!user) {
-              return null;
-            }
-            return user;
-          }
-        };
-      }
-
-      // 5. Módulo Casal da SPEC (Fallback canônico se o colega ainda não entregou)
-      if (!window.Casal) {
-        window.Casal = {
-          convidar(emailParceiro) {
-            // Aplica RN01
-            const usuario = window.Auth.usuarioAtual();
-            if (!usuario) throw new window.RegraViolada("RN01", "Acesso restrito a usuários autenticados.");
-            // Aplica RN02
-            if (usuario.casalId) throw new window.RegraViolada("RN02", "Usuário já pertence a um casal ativo.");
-            const emailNorm = (emailParceiro || "").toLowerCase().trim();
-            // Aplica RN08
-            if (emailNorm === usuario.email) {
-              throw new window.RegraViolada("RN08", "Não é permitido enviar convite para o próprio e-mail.");
-            }
-            const estado = window.Store.ler();
-            const parceiro = estado.usuarios.find(u => u.email === emailNorm);
-            if (parceiro && parceiro.casalId) {
-              throw new window.RegraViolada("RN08", "O usuário convidado já pertence a outro casal ativo.");
-            }
-            const novoConvite = {
-              id: window.Store.novoId(),
-              deUsuarioId: usuario.id,
-              paraEmail: emailNorm,
-              status: "PENDENTE",
-              criadoEm: new Date().toISOString()
-            };
-            estado.convites.push(novoConvite);
-            window.Store.salvar(estado);
-            return novoConvite;
-          },
-          convitesRecebidos() {
-            const usuario = window.Auth.usuarioAtual();
-            if (!usuario) return [];
-            const estado = window.Store.ler();
-            return estado.convites.filter(c => c.paraEmail === usuario.email && c.status === "PENDENTE");
-          },
-          aceitarConvite(conviteId) {
-            const usuario = window.Auth.usuarioAtual();
-            if (!usuario) throw new window.RegraViolada("RN01", "Acesso restrito.");
-            // Aplica RN02
-            if (usuario.casalId) throw new window.RegraViolada("RN02", "Usuário já pertence a um casal ativo.");
-            const estado = window.Store.ler();
-            const convite = estado.convites.find(c => c.id === conviteId);
-            if (!convite || convite.status !== "PENDENTE") {
-              throw new Error("Convite não encontrado ou já processado.");
-            }
-            const remetente = estado.usuarios.find(u => u.id === convite.deUsuarioId);
-            if (!remetente) throw new Error("Remetente não localizado.");
-            if (remetente.casalId) {
-              throw new window.RegraViolada("RN02", "O remetente já ingressou em outro casal.");
-            }
-            const novoCasal = {
-              id: window.Store.novoId(),
-              usuarioIds: [remetente.id, usuario.id],
-              apelido: `${remetente.nome} & ${usuario.nome}`,
-              criadoEm: new Date().toISOString()
-            };
-            estado.casais.push(novoCasal);
-            remetente.casalId = novoCasal.id;
-            usuario.casalId = novoCasal.id;
-            convite.status = "ACEITO";
-            window.Store.salvar(estado);
-            return novoCasal;
-          },
-          recusarConvite(conviteId) {
-            const estado = window.Store.ler();
-            const convite = estado.convites.find(c => c.id === conviteId);
-            if (convite) {
-              convite.status = "RECUSADO";
-              window.Store.salvar(estado);
-            }
-          },
-          casalAtual() {
-            const usuario = window.Auth.usuarioAtual();
-            if (!usuario || !usuario.casalId) return null;
-            const estado = window.Store.ler();
-            return estado.casais.find(c => c.id === usuario.casalId) || null;
-          },
-          parceiro() {
-            const usuario = window.Auth.usuarioAtual();
-            const casal = this.casalAtual();
-            if (!usuario || !casal) return null;
-            const parceiroId = casal.usuarioIds.find(id => id !== usuario.id);
-            const estado = window.Store.ler();
-            return estado.usuarios.find(u => u.id === parceiroId) || null;
-          }
-        };
-      }
-
-      // 6. Módulo Desafios da SPEC (Fallback canônico se o colega ainda não entregou)
-      if (!window.Desafios) {
-        window.Desafios = {
-          aceitar(ideiaId, tituloCustom = "Desafio do Casal", pontosCustom = 50) {
-            // Aplica RN01
-            const usuario = window.Auth.usuarioAtual();
-            if (!usuario) throw new window.RegraViolada("RN01", "Acesso restrito.");
-            // Aplica RN02
-            const casal = window.Casal.casalAtual();
-            if (!casal) throw new window.RegraViolada("RN02", "Usuário não possui casal ativo.");
-
-            const estado = window.Store.ler();
-            const novoDesafio = {
-              id: window.Store.novoId(),
-              casalId: casal.id,
-              ideiaId: ideiaId || "ideia-01",
-              titulo: tituloCustom,
-              pontos: pontosCustom,
-              status: "ACEITO",
-              criadoPorId: usuario.id,
-              criadoEm: new Date().toISOString(),
-              concluidoEm: null,
-              concluidoPorId: null,
-              memoria: null
-            };
-            estado.desafios.push(novoDesafio);
-            window.Store.salvar(estado);
-            return novoDesafio;
-          },
-          concluir(desafioId, { foto = null, mensagem = null } = {}) {
-            // Aplica RN01
-            const usuario = window.Auth.usuarioAtual();
-            if (!usuario) throw new window.RegraViolada("RN01", "Acesso restrito.");
-            const casal = window.Casal.casalAtual();
-            if (!casal) throw new window.RegraViolada("RN02", "Usuário não possui casal ativo.");
-
-            const estado = window.Store.ler();
-            const desafio = estado.desafios.find(d => d.id === desafioId);
-            if (!desafio) throw new Error("Desafio não encontrado.");
-
-            // Aplica RN03: Isolamento de dados do casal
-            if (desafio.casalId !== casal.id) {
-              throw new window.RegraViolada("RN03", "Acesso não autorizado ao desafio de outro casal.");
-            }
-
-            // Aplica RN04: Unicidade de conclusão
-            if (desafio.status === "CONCLUIDO") {
-              throw new window.RegraViolada("RN04", "Este desafio já foi concluído anteriormente.");
-            }
-
-            desafio.status = "CONCLUIDO";
-            desafio.concluidoEm = new Date().toISOString();
-            desafio.concluidoPorId = usuario.id;
-            desafio.memoria = { foto, mensagem };
-
-            window.Store.salvar(estado);
-            return desafio;
-          },
-          listar(statusFiltro) {
-            // Aplica RN01
-            const usuario = window.Auth.usuarioAtual();
-            if (!usuario) throw new window.RegraViolada("RN01", "Acesso restrito.");
-            const casal = window.Casal.casalAtual();
-            if (!casal) return [];
-
-            const estado = window.Store.ler();
-            return estado.desafios.filter(d => {
-              if (d.casalId !== casal.id) return false;
-              if (statusFiltro) return d.status === statusFiltro;
-              return true;
-            });
-          },
-          obter(id) {
-            const casal = window.Casal.casalAtual();
-            if (!casal) return null;
-            const estado = window.Store.ler();
-            return estado.desafios.find(d => d.id === id && d.casalId === casal.id) || null;
-          }
-        };
-      }
-
-      // 7. Módulo Pontuacao da SPEC (Fallback canônico se o colega ainda não entregou)
-      if (!window.Pontuacao) {
-        window.Pontuacao = {
-          total() {
-            // Aplica RN06: Saldo = Concluídos - Resgatadas
-            const casal = window.Casal.casalAtual();
-            if (!casal) return 0;
-            const estado = window.Store.ler();
-            const ganhos = estado.desafios
-              .filter(d => d.casalId === casal.id && d.status === "CONCLUIDO")
-              .reduce((s, d) => s + (d.pontos || 0), 0);
-            const gastos = estado.recompensas
-              .filter(r => r.casalId === casal.id && r.status === "RESGATADA")
-              .reduce((s, r) => s + (r.custo || 0), 0);
-            return ganhos - gastos;
-          },
-          acumulado() {
-            const casal = window.Casal.casalAtual();
-            if (!casal) return 0;
-            const estado = window.Store.ler();
-            return estado.desafios
-              .filter(d => d.casalId === casal.id && d.status === "CONCLUIDO")
-              .reduce((s, d) => s + (d.pontos || 0), 0);
-          },
-          ultimaConclusao() {
-            const casal = window.Casal.casalAtual();
-            if (!casal) return null;
-            const estado = window.Store.ler();
-            const concluidos = estado.desafios
-              .filter(d => d.casalId === casal.id && d.status === "CONCLUIDO" && d.concluidoEm)
-              .sort((a, b) => new Date(b.concluidoEm) - new Date(a.concluidoEm));
-            return concluidos.length > 0 ? new Date(concluidos[0].concluidoEm) : null;
-          },
-          ofensiva() {
-            // Aplica RN05: Cálculo de ofensiva por dias civis consecutivos
-            const casal = window.Casal.casalAtual();
-            if (!casal) return 0;
-            const estado = window.Store.ler();
-            const concluidos = estado.desafios
-              .filter(d => d.casalId === casal.id && d.status === "CONCLUIDO" && d.concluidoEm);
-
-            if (concluidos.length === 0) return 0;
-
-            // Extrai datas únicas ordenadas
-            const datasUnicas = Array.from(new Set(
-              concluidos.map(d => {
-                const dt = new Date(d.concluidoEm);
-                return `${dt.getUTCFullYear()}-${String(dt.getUTCMonth() + 1).padStart(2, '0')}-${String(dt.getUTCDate()).padStart(2, '0')}`;
-              })
-            )).sort();
-
-            if (datasUnicas.length === 1) return 1;
-
-            // Calcula dias consecutivos a partir do final
-            let streak = 1;
-            for (let i = datasUnicas.length - 1; i > 0; i--) {
-              const dataAtual = new Date(datasUnicas[i]);
-              const dataAnterior = new Date(datasUnicas[i - 1]);
-              const diffDias = Math.round((dataAtual - dataAnterior) / (1000 * 60 * 60 * 24));
-
-              if (diffDias === 1) {
-                streak++;
-              } else {
-                break;
-              }
-            }
-            return streak;
-          }
-        };
-      }
-
-    })(window);
-  </script>
-
-  <!-- Harness e Testes Automatizados -->
-  <script>
-    (function () {
-      "use strict";
-
-      // Contadores Globais
-      let totalTestes = 0;
-      let passouContador = 0;
-      let falhouContador = 0;
-
-      // Elementos do DOM
-      const containerEl = document.getElementById("container-testes");
-      const totalEl = document.getElementById("contador-total");
-      const passouEl = document.getElementById("contador-passou");
-      const falhouEl = document.getElementById("contador-falhou");
-      const statusGeralEl = document.getElementById("status-geral");
-      const barraProgressoEl = document.getElementById("barra-progresso");
-
-      /**
-       * Asserção básica booleana
-       */
-      function assert(condicao, mensagem) {
-        if (!condicao) {
-          throw new Error(mensagem || "Falha na asserção");
-        }
-      }
-
-      /**
-       * Asserção de igualdade estrita
-       */
-      function assertEqual(atual, esperado, mensagem) {
-        if (atual !== esperado) {
-          throw new Error(`${mensagem || "AssertEqual falhou"}: esperado [${esperado}], mas recebeu [${atual}]`);
-        }
-      }
-
-      /**
-       * Asserção de que uma função deve rejeitar com determinado código de regra
-       */
-      async function assertRejeita(fn, codigoRegraEsperado, mensagemDescritiva) {
-        let disparou = false;
-        try {
-          await fn();
-        } catch (erro) {
-          disparou = true;
-          const regraObtida = erro.regra || (erro.message && erro.message.includes(codigoRegraEsperado) ? codigoRegraEsperado : null);
-          if (regraObtida !== codigoRegraEsperado) {
-            throw new Error(
-              `${mensagemDescritiva || "Falha de regra"}: Esperava violação de ${codigoRegraEsperado}, mas recebeu erro: "${erro.message}"`
-            );
+          try {
+            await t.fn();
+            this.passaram++;
+            resultsEl.innerHTML += `
+              <div class="list-group-item list-group-item-action teste-passou d-flex justify-content-between align-items-center py-3">
+                <span>✔ ${escapar(t.nome)}</span>
+                <span class="badge-status-pass">PASSOU</span>
+              </div>
+            `;
+          } catch (e) {
+            this.falharam++;
+            resultsEl.innerHTML += `
+              <div class="list-group-item list-group-item-action list-group-item-danger teste-falhou d-flex justify-content-between align-items-start py-3">
+                <div>
+                  <strong>✖ ${escapar(t.nome)}</strong>
+                  <div class="small mt-1 text-danger font-monospace">${escapar(e.message || String(e))}</div>
+                </div>
+                <span class="badge-status-fail">FALHOU</span>
+              </div>
+            `;
           }
         }
-        if (!disparou) {
-          throw new Error(
-            `${mensagemDescritiva || "Falha de regra"}: A operação deveria ser rejeitada com ${codigoRegraEsperado}, mas foi executada com sucesso.`
-          );
-        }
-      }
 
-      /**
-       * Runner de cada teste: Limpa o Store e isola o estado antes de cada execução
-       */
-      async function teste(nome, fn) {
-        totalTestes++;
-
-        // Garante isolamento estrito com localStorage limpo
-        window.Store.resetar();
-
-        let passou = false;
-        let erroMensagem = "";
-
-        try {
-          await fn();
-          passou = true;
-          passouContador++;
-        } catch (erro) {
-          passou = false;
-          falhouContador++;
-          erroMensagem = erro.message || String(erro);
-          console.error(`[FALHA] ${nome}:`, erro);
-        }
-
-        renderizarResultado(nome, passou, erroMensagem);
-        atualizarMetricas();
-      }
-
-      /**
-       * Renderiza o item de teste com acessibilidade visual e textual (WCAG AA)
-       */
-      function renderizarResultado(nome, passou, erro) {
-        const item = document.createElement("article");
-        item.className = `test-item ${passou ? "pass" : "fail"}`;
-
-        item.innerHTML = `
-          <div class="d-flex justify-content-between align-items-center gap-2">
-            <span class="fw-semibold text-dark">${escaparHtml(nome)}</span>
-            <span class="${passou ? "badge-pass" : "badge-fail"}" aria-label="Status: ${passou ? 'Passou' : 'Falhou'}">
-              ${passou ? '<i class="bi bi-check-circle-fill me-1" aria-hidden="true"></i>PASSOU' : '<i class="bi bi-x-circle-fill me-1" aria-hidden="true"></i>FALHOU'}
-            </span>
+        const total = this.passaram + this.falharam;
+        summaryEl.className = this.falharam === 0 ? 'alert alert-success mb-4 shadow-sm' : 'alert alert-danger mb-4 shadow-sm';
+        summaryEl.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="alert-heading mb-1 fw-bold">${this.falharam === 0 ? 'Sucesso Total!' : 'Atenção: Testes Falharam'}</h5>
+              <span><strong>Total:</strong> ${total} testes | <strong>Passaram:</strong> ${this.passaram} | <strong>Falharam:</strong> ${this.falharam}</span>
+            </div>
+            <span class="fs-4">${this.falharam === 0 ? '🎉 100%' : '⚠️'}</span>
           </div>
-          ${!passou ? `<div class="code-error"><i class="bi bi-exclamation-triangle-fill me-1" aria-hidden="true"></i>${escaparHtml(erro)}</div>` : ""}
         `;
-
-        containerEl.appendChild(item);
       }
+    };
 
-      /**
-       * Atualiza os contadores na interface
-       */
-      function atualizarMetricas() {
-        if (totalEl) totalEl.textContent = totalTestes;
-        if (passouEl) passouEl.textContent = passouContador;
-        if (falhouEl) falhouEl.textContent = falhouContador;
+    // Apelido para a função teste(nome, fn)
+    const teste = (nome, fn) => TestRunner.registrar(nome, fn);
 
-        const perc = totalTestes > 0 ? Math.round((passouContador / totalTestes) * 100) : 0;
-        if (barraProgressoEl) {
-          barraProgressoEl.style.width = `${perc}%`;
-          barraProgressoEl.className = falhouContador > 0 ? "progress-bar bg-danger" : "progress-bar bg-success";
+    function assert(condicao, mensagem) {
+      if (!condicao) throw new Error(mensagem || "Falha na asserção");
+    }
+
+    function assertEqual(atual, esperado, mensagem) {
+      if (atual !== esperado) {
+        throw new Error(`${mensagem || "AssertEqual falhou"}: esperado [${esperado}], recebido [${atual}]`);
+      }
+    }
+
+    async function assertRejeita(fn, codigoRegraEsperado, mensagemDescritiva) {
+      let disparou = false;
+      try {
+        await fn();
+      } catch (erro) {
+        disparou = true;
+        const regraObtida = erro.regra || (erro.message && erro.message.includes(codigoRegraEsperado) ? codigoRegraEsperado : null);
+        if (regraObtida !== codigoRegraEsperado) {
+          throw new Error(`${mensagemDescritiva || "Falha de regra"}: Esperava ${codigoRegraEsperado}, mas recebeu erro: "${erro.message}"`);
         }
-
-        if (statusGeralEl) {
-          if (falhouContador === 0) {
-            statusGeralEl.textContent = "100% Aprovado ✓";
-            statusGeralEl.className = "fs-4 fw-bold text-success d-block mt-2";
-          } else {
-            statusGeralEl.textContent = `${falhouContador} falha(s)`;
-            statusGeralEl.className = "fs-4 fw-bold text-danger d-block mt-2";
-          }
-        }
       }
-
-      function escaparHtml(txt) {
-        return String(txt || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      if (!disparou) {
+        throw new Error(`${mensagemDescritiva || "Falha de regra"}: A operação deveria ser rejeitada com ${codigoRegraEsperado}`);
       }
-
-      /**
-       * Execução de todos os cenários cobrindo de RN01 a RN08
-       */
-      async function executarTodosOsTestes() {
-        // Reset dos contadores visuais
-        totalTestes = 0;
-        passouContador = 0;
-        falhouContador = 0;
-        containerEl.innerHTML = "";
-        statusGeralEl.textContent = "Executando...";
-        statusGeralEl.className = "fs-4 fw-bold text-secondary d-block mt-2";
-
-        // ==========================================
-        // GRUPO RN01: Acesso Restrito
-        // ==========================================
-
-        // Aplica RN01: Usuário anônimo sem login não pode listar desafios
-        await teste("RN01 (Cenário Principal) - Bloqueia listagem de desafios para usuário não autenticado", async () => {
-          await assertRejeita(async () => {
-            window.Desafios.listar();
-          }, "RN01", "Usuário sem autenticação tentando listar desafios");
-        });
-
-        // Aplica RN01: Usuário anônimo sem login não pode criar recompensas
-        await teste("RN01 (Caso de Borda) - Bloqueia criação de recompensas para usuário não autenticado", async () => {
-          await assertRejeita(async () => {
-            window.Recompensas.criar({ titulo: "Jantar Romântico", custo: 50 });
-          }, "RN01", "Usuário anônimo criando recompensa");
-        });
-
-        // ==========================================
-        // GRUPO RN02: Exclusividade do Casal
-        // ==========================================
-
-        // Aplica RN02: Usuário já em casal tentando aceitar outro convite
-        await teste("RN02 (Cenário Principal) - Usuário já vinculado a um casal não pode aceitar convite de outro parceiro", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "Lia", email: "lia@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "Leo", email: "leo@teste.com", senha: "senha123" });
-          
-          // Forma primeiro casal
-          await window.Auth.login("lia@teste.com", "senha123");
-          const convite1 = window.Casal.convidar("leo@teste.com");
-          await window.Auth.login("leo@teste.com", "senha123");
-          window.Casal.aceitarConvite(convite1.id);
-
-          // Terceiro usuário tenta convidar Lia
-          const u3 = await window.Auth.cadastrar({ nome: "Max", email: "max@teste.com", senha: "senha123" });
-          await window.Auth.login("max@teste.com", "senha123");
-          
-          // Lia tenta aceitar o convite de Max enquanto já está em casal
-          await window.Auth.login("lia@teste.com", "senha123");
-          const estado = window.Store.ler();
-          const conviteMax = {
-            id: window.Store.novoId(),
-            deUsuarioId: u3.id,
-            paraEmail: "lia@teste.com",
-            status: "PENDENTE",
-            criadoEm: new Date().toISOString()
-          };
-          estado.convites.push(conviteMax);
-          window.Store.salvar(estado);
-
-          await assertRejeita(async () => {
-            window.Casal.aceitarConvite(conviteMax.id);
-          }, "RN02", "Aceitar segundo casal");
-        });
-
-        // Aplica RN02: Usuário sem casal ativo tentando criar recompensa
-        await teste("RN02 (Caso de Borda) - Usuário autenticado sem casal ativo não pode criar recompensa", async () => {
-          await window.Auth.cadastrar({ nome: "Solteiro", email: "solteiro@teste.com", senha: "senha123" });
-          await assertRejeita(async () => {
-            window.Recompensas.criar({ titulo: "Café na cama", custo: 30 });
-          }, "RN02", "Criar recompensa sem ter casal vinculado");
-        });
-
-        // ==========================================
-        // GRUPO RN03: Isolamento de Dados do Casal
-        // ==========================================
-
-        // Aplica RN03: Desafio de outro casal não pode ser concluído
-        await teste("RN03 (Cenário Principal) - Casal A é impedido de concluir desafio criado pelo Casal B", async () => {
-          // Casal B
-          const b1 = await window.Auth.cadastrar({ nome: "B1", email: "b1@teste.com", senha: "senha123" });
-          const b2 = await window.Auth.cadastrar({ nome: "B2", email: "b2@teste.com", senha: "senha123" });
-          await window.Auth.login("b1@teste.com", "senha123");
-          const convB = window.Casal.convidar("b2@teste.com");
-          await window.Auth.login("b2@teste.com", "senha123");
-          window.Casal.aceitarConvite(convB.id);
-          const desafioB = window.Desafios.aceitar("ideia-01", "Piquenique do Casal B", 50);
-
-          // Casal A
-          const a1 = await window.Auth.cadastrar({ nome: "A1", email: "a1@teste.com", senha: "senha123" });
-          const a2 = await window.Auth.cadastrar({ nome: "A2", email: "a2@teste.com", senha: "senha123" });
-          await window.Auth.login("a1@teste.com", "senha123");
-          const convA = window.Casal.convidar("a2@teste.com");
-          await window.Auth.login("a2@teste.com", "senha123");
-          window.Casal.aceitarConvite(convA.id);
-
-          // Casal A tenta concluir desafio do Casal B
-          await assertRejeita(async () => {
-            window.Desafios.concluir(desafioB.id);
-          }, "RN03", "Concluir desafio de outro casal");
-        });
-
-        // Aplica RN03: Recompensa de outro casal não pode ser resgatada
-        await teste("RN03 (Caso de Borda) - Casal A não pode resgatar recompensa pertencente ao Casal B", async () => {
-          // Cria Casal B e recompensa
-          const b1 = await window.Auth.cadastrar({ nome: "B1", email: "b1@teste.com", senha: "senha123" });
-          const b2 = await window.Auth.cadastrar({ nome: "B2", email: "b2@teste.com", senha: "senha123" });
-          await window.Auth.login("b1@teste.com", "senha123");
-          const convB = window.Casal.convidar("b2@teste.com");
-          await window.Auth.login("b2@teste.com", "senha123");
-          window.Casal.aceitarConvite(convB.id);
-          const recB = window.Recompensas.criar({ titulo: "Massagem do Casal B", custo: 20 });
-
-          // Cria Casal A
-          const a1 = await window.Auth.cadastrar({ nome: "A1", email: "a1@teste.com", senha: "senha123" });
-          const a2 = await window.Auth.cadastrar({ nome: "A2", email: "a2@teste.com", senha: "senha123" });
-          await window.Auth.login("a1@teste.com", "senha123");
-          const convA = window.Casal.convidar("a2@teste.com");
-          await window.Auth.login("a2@teste.com", "senha123");
-          window.Casal.aceitarConvite(convA.id);
-
-          // Tenta resgatar
-          await assertRejeita(async () => {
-            window.Recompensas.resgatar(recB.id);
-          }, "RN03", "Resgatar recompensa pertencente a outro casal");
-        });
-
-        // ==========================================
-        // GRUPO RN04: Unicidade de Conclusão
-        // ==========================================
-
-        // Aplica RN04: Conclusão única com sucesso
-        await teste("RN04 (Cenário Principal) - Concluir desafio a primeira vez registra status CONCLUIDO e memória", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          const desafio = window.Desafios.aceitar("ideia-01", "Cozinhar Juntos", 80);
-          const concluido = window.Desafios.concluir(desafio.id, { mensagem: "Ficou delicioso!" });
-
-          assertEqual(concluido.status, "CONCLUIDO", "Status deve ser CONCLUIDO");
-          assert(concluido.concluidoEm !== null, "Deve registrar data de conclusão");
-          assertEqual(concluido.memoria.mensagem, "Ficou delicioso!", "Memória de mensagem deve ser registrada");
-        });
-
-        // Aplica RN04: Bloqueia conclusão duplicada
-        await teste("RN04 (Caso de Borda) - Bloqueia tentativa de concluir o mesmo desafio pela segunda vez", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          const desafio = window.Desafios.aceitar("ideia-01", "Noite de Filmes", 60);
-          window.Desafios.concluir(desafio.id);
-
-          // Segunda tentativa deve ser rejeitada
-          await assertRejeita(async () => {
-            window.Desafios.concluir(desafio.id);
-          }, "RN04", "Conclusão duplicada do mesmo desafio");
-        });
-
-        // ==========================================
-        // GRUPO RN05: Regra da Ofensiva e Pontuação
-        // ==========================================
-
-        // Aplica RN05: Primeira conclusão da história fixa ofensiva em 1
-        await teste("RN05 (Primeira Conclusão) - Primeira conclusão histórica fixa a ofensiva do casal em 1", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          const desafio = window.Desafios.aceitar("ideia-01", "Caminhada ao Pôr do Sol", 70);
-          window.Desafios.concluir(desafio.id);
-
-          assertEqual(window.Pontuacao.ofensiva(), 1, "Ofensiva inicial deve ser 1");
-          assertEqual(window.Pontuacao.acumulado(), 70, "Pontuação acumulada deve ser 70");
-        });
-
-        // Aplica RN05: Múltiplas conclusões no mesmo dia somam pontos mas mantêm ofensiva em 1
-        await teste("RN05 (Mesmo Dia) - Múltiplas conclusões no mesmo dia somam pontos mas não aumentam ofensiva", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          const d1 = window.Desafios.aceitar("ideia-01", "Desafio 1", 50);
-          const d2 = window.Desafios.aceitar("ideia-02", "Desafio 2", 100);
-
-          window.Desafios.concluir(d1.id);
-          window.Desafios.concluir(d2.id);
-
-          assertEqual(window.Pontuacao.ofensiva(), 1, "Ofensiva no mesmo dia não pode passar de 1");
-          assertEqual(window.Pontuacao.acumulado(), 150, "Pontos acumulados somam 50 + 100 = 150");
-        });
-
-        // Aplica RN05: Conclusão em dia consecutivo (+1 dia calendário) incrementa ofensiva para 2
-        await teste("RN05 (Dia Consecutivo) - Conclusão em dia consecutivo incrementa a ofensiva para 2", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          const casal = window.Casal.aceitarConvite(conv.id);
-
-          // Simula atividade concluída ontem (24h atrás)
-          const ontem = new Date(Date.now() - 24 * 60 * 60 * 1000);
-          const dOntem = window.Desafios.aceitar("ideia-01", "Atividade Ontem", 50);
-          window.Desafios.concluir(dOntem.id);
-          // Ajusta data de ontem no storage
-          const estado = window.Store.ler();
-          const d1 = estado.desafios.find(d => d.id === dOntem.id);
-          d1.concluidoEm = ontem.toISOString();
-          window.Store.salvar(estado);
-
-          // Conclui atividade hoje
-          const dHoje = window.Desafios.aceitar("ideia-02", "Atividade Hoje", 50);
-          window.Desafios.concluir(dHoje.id);
-
-          assertEqual(window.Pontuacao.ofensiva(), 2, "Ofensiva consecutiva deve ser 2");
-        });
-
-        // Aplica RN05: Dia pulado (> 1 dia sem atividade) reinicia a ofensiva em 1
-        await teste("RN05 (Dia Pulado / Intervalo > 1) - Intervalo superior a 1 dia reinicia a ofensiva em 1", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          // Simula atividade concluída há 4 dias
-          const quatroDiasAtras = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000);
-          const dAntigo = window.Desafios.aceitar("ideia-01", "Atividade Antiga", 50);
-          window.Desafios.concluir(dAntigo.id);
-          const estado = window.Store.ler();
-          const d1 = estado.desafios.find(d => d.id === dAntigo.id);
-          d1.concluidoEm = quatroDiasAtras.toISOString();
-          window.Store.salvar(estado);
-
-          // Conclui atividade hoje após intervalo
-          const dHoje = window.Desafios.aceitar("ideia-02", "Atividade Retomada", 50);
-          window.Desafios.concluir(dHoje.id);
-
-          assertEqual(window.Pontuacao.ofensiva(), 1, "Ofensiva deve ser reiniciada em 1 após gap");
-        });
-
-        // ==========================================
-        // GRUPO RN06: Regra de Resgate de Recompensas
-        // ==========================================
-
-        // Aplica RN06: Resgata com saldo suficiente e debita pontos
-        await teste("RN06 (Cenário Principal) - Resgate com saldo suficiente debita pontos do saldo", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          // Ganha 100 pontos
-          const d1 = window.Desafios.aceitar("ideia-01", "Ganha 100 pts", 100);
-          window.Desafios.concluir(d1.id);
-
-          // Cria recompensa de 40 pontos
-          const recompensa = window.Recompensas.criar({ titulo: "Massagem", custo: 40 });
-          assertEqual(window.Pontuacao.total(), 100, "Saldo antes do resgate");
-
-          // Resgata
-          const resgatada = window.Recompensas.resgatar(recompensa.id);
-          assertEqual(resgatada.status, "RESGATADA", "Status após resgate");
-          assertEqual(window.Pontuacao.total(), 60, "Saldo após debitar 40 de 100 deve ser 60");
-        });
-
-        // Aplica RN06: Resgata com saldo exato
-        await teste("RN06 (Saldo Exato) - Resgate com saldo exatamente igual ao custo tem sucesso e zera o saldo", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          const d1 = window.Desafios.aceitar("ideia-01", "Ganha 50 pts", 50);
-          window.Desafios.concluir(d1.id);
-
-          const recompensa = window.Recompensas.criar({ titulo: "Sobremesa Especial", custo: 50 });
-          window.Recompensas.resgatar(recompensa.id);
-
-          assertEqual(window.Pontuacao.total(), 0, "Saldo final deve ser exatamente 0");
-        });
-
-        // Aplica RN06: Bloqueia resgate com saldo insuficiente
-        await teste("RN06 (Saldo Insuficiente) - Bloqueia resgate quando saldo é menor que o custo", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          // Ganha apenas 20 pontos
-          const d1 = window.Desafios.aceitar("ideia-01", "Ganha 20 pts", 20);
-          window.Desafios.concluir(d1.id);
-
-          const recompensa = window.Recompensas.criar({ titulo: "Viagem de Fim de Semana", custo: 100 });
-
-          await assertRejeita(async () => {
-            window.Recompensas.resgatar(recompensa.id);
-          }, "RN06", "Resgatar com saldo insuficiente (20 pts para 100 pts)");
-        });
-
-        // Aplica RN06: Bloqueia resgate repetido da mesma recompensa
-        await teste("RN06 (Caso de Borda) - Bloqueia tentativa de resgatar novamente uma recompensa já resgatada", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
-          const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
-          const conv = window.Casal.convidar("u2@teste.com");
-          await window.Auth.login("u2@teste.com", "senha123");
-          window.Casal.aceitarConvite(conv.id);
-
-          const d1 = window.Desafios.aceitar("ideia-01", "Ganha 200 pts", 200);
-          window.Desafios.concluir(d1.id);
-
-          const rec = window.Recompensas.criar({ titulo: "Café Especial", custo: 50 });
-          window.Recompensas.resgatar(rec.id);
-
-          // Segunda tentativa
-          await assertRejeita(async () => {
-            window.Recompensas.resgatar(rec.id);
-          }, "RN06", "Resgate duplo da mesma recompensa");
-        });
-
-        // ==========================================
-        // GRUPO RN07: Validação de Cadastro
-        // ==========================================
-
-        // Aplica RN07: Cadastro válido com hash SHA-256 e sessão ativa
-        await teste("RN07 (Cenário Principal) - Cadastro com dados válidos persiste usuário e senha hasheada em SHA-256", async () => {
-          const user = await window.Auth.cadastrar({
-            nome: "Mariana",
-            email: "mariana@teste.com",
-            senha: "senhaSegura123",
-            dataNascimento: "1999-05-15"
-          });
-
-          assertEqual(user.email, "mariana@teste.com", "E-mail normalizado");
-          assert(user.senhaHash !== "senhaSegura123", "Senha não pode estar em texto puro");
-          assertEqual(user.senhaHash.length, 64, "Hash SHA-256 deve ter 64 caracteres hexadecimais");
-          assertEqual(window.Auth.usuarioAtual().id, user.id, "Sessão ativa estabelecida");
-        });
-
-        // Aplica RN07: Senha curta (< 6 caracteres)
-        await teste("RN07 (Caso de Borda) - Rejeita cadastro quando senha possui menos de 6 caracteres", async () => {
-          await assertRejeita(async () => {
-            await window.Auth.cadastrar({
-              nome: "Beto",
-              email: "beto@teste.com",
-              senha: "12345", // Apenas 5 caracteres
-              dataNascimento: "2000-01-01"
-            });
-          }, "RN07", "Senha menor que 6 caracteres");
-        });
-
-        // Aplica RN07: E-mail duplicado
-        await teste("RN07 (Caso de Borda) - Rejeita cadastro quando e-mail já existe no sistema", async () => {
-          await window.Auth.cadastrar({
-            nome: "Primeiro",
-            email: "duplicado@teste.com",
-            senha: "senha123",
-            dataNascimento: "2000-01-01"
-          });
-
-          await assertRejeita(async () => {
-            await window.Auth.cadastrar({
-              nome: "Segundo",
-              email: "duplicado@teste.com", // Mesmo e-mail
-              senha: "outrasenha123",
-              dataNascimento: "2001-02-02"
-            });
-          }, "RN07", "Cadastro com e-mail duplicado");
-        });
-
-        // Aplica RN07: E-mail sintaticamente inválido
-        await teste("RN07 (Caso de Borda) - Rejeita cadastro com e-mail de formato inválido", async () => {
-          await assertRejeita(async () => {
-            await window.Auth.cadastrar({
-              nome: "Invalido",
-              email: "emailsemarroba",
-              senha: "senha123",
-              dataNascimento: "2000-01-01"
-            });
-          }, "RN07", "E-mail sem formatação sintática válida");
-        });
-
-        // ==========================================
-        // GRUPO RN08: Validação de Convites
-        // ==========================================
-
-        // Aplica RN08: Envio de convite válido
-        await teste("RN08 (Cenário Principal) - Envio de convite para outro parceiro cria convite com status PENDENTE", async () => {
-          const u1 = await window.Auth.cadastrar({ nome: "Remetente", email: "remetente@teste.com", senha: "senha123" });
-          const convite = window.Casal.convidar("parceiro@teste.com");
-
-          assertEqual(convite.status, "PENDENTE", "Status do convite deve ser PENDENTE");
-          assertEqual(convite.paraEmail, "parceiro@teste.com", "Destinatário do convite");
-          assertEqual(convite.deUsuarioId, u1.id, "Remetente do convite");
-        });
-
-        // Aplica RN08: Bloqueio de auto-convite
-        await teste("RN08 (Caso de Borda) - Impede envio de convite de casal para si mesmo", async () => {
-          await window.Auth.cadastrar({ nome: "Narciso", email: "narciso@teste.com", senha: "senha123" });
-
-          await assertRejeita(async () => {
-            window.Casal.convidar("narciso@teste.com");
-          }, "RN08", "Convidar a si mesmo");
-        });
-
-        // Aplica RN08: Bloqueio de convidar usuário já em casal
-        await teste("RN08 (Caso de Borda) - Impede envio de convite para usuário que já pertence a um casal ativo", async () => {
-          // Cria casal existente (P1 e P2)
-          const p1 = await window.Auth.cadastrar({ nome: "P1", email: "p1@teste.com", senha: "senha123" });
-          const p2 = await window.Auth.cadastrar({ nome: "P2", email: "p2@teste.com", senha: "senha123" });
-          await window.Auth.login("p1@teste.com", "senha123");
-          const convP = window.Casal.convidar("p2@teste.com");
-          await window.Auth.login("p2@teste.com", "senha123");
-          window.Casal.aceitarConvite(convP.id);
-
-          // Usuário avulso tenta convidar P1
-          const avulso = await window.Auth.cadastrar({ nome: "Avulso", email: "avulso@teste.com", senha: "senha123" });
-          await window.Auth.login("avulso@teste.com", "senha123");
-
-          await assertRejeita(async () => {
-            window.Casal.convidar("p1@teste.com");
-          }, "RN08", "Convidar parceiro que já tem casal");
-        });
-
-      }
-
-      // Inicialização do Runner
-      document.addEventListener("DOMContentLoaded", function () {
-        const btnReexecutar = document.getElementById("btn-reexecutar");
-        if (btnReexecutar) {
-          btnReexecutar.addEventListener("click", executarTodosOsTestes);
-        }
-
-        // Execução inicial automática
-        executarTodosOsTestes();
+    }
+
+    function escapar(txt) {
+      return String(txt || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // ==========================================
+    // GRUPO RN01: Acesso Restrito
+    // ==========================================
+    // Aplica RN01: Bloqueia listagem de desafios para anônimos
+    teste("RN01 - Bloqueia listagem de desafios para usuário não autenticado", async () => {
+      await assertRejeita(async () => {
+        window.Desafios.listar();
+      }, "RN01", "Listar desafios sem login");
+    });
+
+    // Aplica RN01: Bloqueia criação de recompensas para anônimos
+    teste("RN01 - Bloqueia criação de recompensas para usuário não autenticado", async () => {
+      await assertRejeita(async () => {
+        window.Recompensas.criar({ titulo: "Jantar", custo: 50 });
+      }, "RN01", "Criar recompensa sem login");
+    });
+
+    // ==========================================
+    // GRUPO RN02: Exclusividade do Casal
+    // ==========================================
+    // Aplica RN02: Usuário já em casal não pode aceitar outro convite
+    teste("RN02 - Usuário já vinculado a um casal não pode aceitar convite de outro parceiro", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "Lia", email: "lia@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "Leo", email: "leo@teste.com", senha: "senha123" });
+      await window.Auth.login("lia@teste.com", "senha123");
+      const c1 = window.Casal.convidar("leo@teste.com");
+      await window.Auth.login("leo@teste.com", "senha123");
+      window.Casal.aceitarConvite(c1.id);
+
+      const u3 = await window.Auth.cadastrar({ nome: "Max", email: "max@teste.com", senha: "senha123" });
+      await window.Auth.login("lia@teste.com", "senha123");
+      const estado = window.Store.ler();
+      const conviteMax = {
+        id: window.Store.novoId(),
+        deUsuarioId: u3.id,
+        paraEmail: "lia@teste.com",
+        status: "PENDENTE",
+        criadoEm: new Date().toISOString()
+      };
+      estado.convites.push(conviteMax);
+      window.Store.salvar(estado);
+
+      await assertRejeita(async () => {
+        window.Casal.aceitarConvite(conviteMax.id);
+      }, "RN02", "Aceitar segundo casal");
+    });
+
+    // Aplica RN02: Usuário sem casal não pode criar recompensa
+    teste("RN02 - Usuário autenticado sem casal ativo não pode criar recompensa", async () => {
+      await window.Auth.cadastrar({ nome: "Solteiro", email: "solteiro@teste.com", senha: "senha123" });
+      await assertRejeita(async () => {
+        window.Recompensas.criar({ titulo: "Café", custo: 30 });
+      }, "RN02", "Criar recompensa sem casal");
+    });
+
+    // ==========================================
+    // GRUPO RN03: Isolamento de Dados do Casal
+    // ==========================================
+    // Aplica RN03: Desafio de outro casal não pode ser concluído
+    teste("RN03 - Casal A é impedido de concluir desafio criado pelo Casal B", async () => {
+      const b1 = await window.Auth.cadastrar({ nome: "B1", email: "b1@teste.com", senha: "senha123" });
+      const b2 = await window.Auth.cadastrar({ nome: "B2", email: "b2@teste.com", senha: "senha123" });
+      await window.Auth.login("b1@teste.com", "senha123");
+      const cB = window.Casal.convidar("b2@teste.com");
+      await window.Auth.login("b2@teste.com", "senha123");
+      window.Casal.aceitarConvite(cB.id);
+      const desafioB = window.Desafios.aceitar("ideia-01", "Desafio B", 50);
+
+      const a1 = await window.Auth.cadastrar({ nome: "A1", email: "a1@teste.com", senha: "senha123" });
+      const a2 = await window.Auth.cadastrar({ nome: "A2", email: "a2@teste.com", senha: "senha123" });
+      await window.Auth.login("a1@teste.com", "senha123");
+      const cA = window.Casal.convidar("a2@teste.com");
+      await window.Auth.login("a2@teste.com", "senha123");
+      window.Casal.aceitarConvite(cA.id);
+
+      await assertRejeita(async () => {
+        window.Desafios.concluir(desafioB.id);
+      }, "RN03", "Concluir desafio de outro casal");
+    });
+
+    // Aplica RN03: Recompensa de outro casal não pode ser resgatada
+    teste("RN03 - Casal A não pode resgatar recompensa pertencente ao Casal B", async () => {
+      const b1 = await window.Auth.cadastrar({ nome: "B1", email: "b1@teste.com", senha: "senha123" });
+      const b2 = await window.Auth.cadastrar({ nome: "B2", email: "b2@teste.com", senha: "senha123" });
+      await window.Auth.login("b1@teste.com", "senha123");
+      const cB = window.Casal.convidar("b2@teste.com");
+      await window.Auth.login("b2@teste.com", "senha123");
+      window.Casal.aceitarConvite(cB.id);
+      const recB = window.Recompensas.criar({ titulo: "Mimo B", custo: 20 });
+
+      const a1 = await window.Auth.cadastrar({ nome: "A1", email: "a1@teste.com", senha: "senha123" });
+      const a2 = await window.Auth.cadastrar({ nome: "A2", email: "a2@teste.com", senha: "senha123" });
+      await window.Auth.login("a1@teste.com", "senha123");
+      const cA = window.Casal.convidar("a2@teste.com");
+      await window.Auth.login("a2@teste.com", "senha123");
+      window.Casal.aceitarConvite(cA.id);
+
+      await assertRejeita(async () => {
+        window.Recompensas.resgatar(recB.id);
+      }, "RN03", "Resgatar recompensa de outro casal");
+    });
+
+    // ==========================================
+    // GRUPO RN04: Unicidade de Conclusão
+    // ==========================================
+    // Aplica RN04: Conclusão única com sucesso
+    teste("RN04 - Concluir desafio a primeira vez registra status CONCLUIDO e memória", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d = window.Desafios.aceitar("ideia-01", "Cozinhar Juntos", 80);
+      const conc = window.Desafios.concluir(d.id, { mensagem: "Muito bom!" });
+
+      assertEqual(conc.status, "CONCLUIDO", "Status CONCLUIDO");
+      assertEqual(conc.memoria.mensagem, "Muito bom!", "Memória salva");
+    });
+
+    // Aplica RN04: Bloqueia conclusão duplicada
+    teste("RN04 - Bloqueia tentativa de concluir o mesmo desafio pela segunda vez", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d = window.Desafios.aceitar("ideia-01", "Cinema em Casa", 60);
+      window.Desafios.concluir(d.id);
+
+      await assertRejeita(async () => {
+        window.Desafios.concluir(d.id);
+      }, "RN04", "Conclusão dupla do desafio");
+    });
+
+    // ==========================================
+    // GRUPO RN05: Regra da Ofensiva e Pontuação
+    // ==========================================
+    // Aplica RN05: Primeira conclusão fixa ofensiva em 1
+    teste("RN05 - Primeira conclusão histórica fixa a ofensiva do casal em 1", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d = window.Desafios.aceitar("ideia-01", "Caminhada", 70);
+      window.Desafios.concluir(d.id);
+
+      assertEqual(window.Pontuacao.ofensiva(), 1, "Ofensiva deve ser 1");
+      assertEqual(window.Pontuacao.acumulado(), 70, "Acumulado deve ser 70");
+    });
+
+    // Aplica RN05: Múltiplas conclusões no mesmo dia
+    teste("RN05 - Múltiplas conclusões no mesmo dia somam pontos mas não aumentam ofensiva", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d1 = window.Desafios.aceitar("ideia-01", "D1", 50);
+      const d2 = window.Desafios.aceitar("ideia-02", "D2", 100);
+      window.Desafios.concluir(d1.id);
+      window.Desafios.concluir(d2.id);
+
+      assertEqual(window.Pontuacao.ofensiva(), 1, "Ofensiva permanece 1");
+      assertEqual(window.Pontuacao.acumulado(), 150, "Pontos somam 150");
+    });
+
+    // Aplica RN05: Dia consecutivo
+    teste("RN05 - Conclusão em dia consecutivo incrementa a ofensiva para 2", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const ontem = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      const dOntem = window.Desafios.aceitar("ideia-01", "Ontem", 50);
+      window.Desafios.concluir(dOntem.id);
+      const estado = window.Store.ler();
+      estado.desafios.find(d => d.id === dOntem.id).concluidoEm = ontem.toISOString();
+      window.Store.salvar(estado);
+
+      const dHoje = window.Desafios.aceitar("ideia-02", "Hoje", 50);
+      window.Desafios.concluir(dHoje.id);
+
+      assertEqual(window.Pontuacao.ofensiva(), 2, "Ofensiva deve ser 2");
+    });
+
+    // Aplica RN05: Dia pulado
+    teste("RN05 - Intervalo superior a 1 dia reinicia a ofensiva em 1", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const passado = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000);
+      const dAntigo = window.Desafios.aceitar("ideia-01", "Antigo", 50);
+      window.Desafios.concluir(dAntigo.id);
+      const estado = window.Store.ler();
+      estado.desafios.find(d => d.id === dAntigo.id).concluidoEm = passado.toISOString();
+      window.Store.salvar(estado);
+
+      const dHoje = window.Desafios.aceitar("ideia-02", "Hoje", 50);
+      window.Desafios.concluir(dHoje.id);
+
+      assertEqual(window.Pontuacao.ofensiva(), 1, "Ofensiva reinicia em 1");
+    });
+
+    // ==========================================
+    // GRUPO RN06: Regra de Resgate de Recompensas
+    // ==========================================
+    // Aplica RN06: Resgate com saldo suficiente
+    teste("RN06 - Resgate com saldo suficiente debita pontos do saldo", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d = window.Desafios.aceitar("ideia-01", "Ganhar 100 pts", 100);
+      window.Desafios.concluir(d.id);
+
+      const rec = window.Recompensas.criar({ titulo: "Massagem", custo: 40 });
+      assertEqual(window.Pontuacao.total(), 100, "Saldo inicial");
+
+      const resgatada = window.Recompensas.resgatar(rec.id);
+      assertEqual(resgatada.status, "RESGATADA", "Status RESGATADA");
+      assertEqual(window.Pontuacao.total(), 60, "Saldo debitado para 60");
+    });
+
+    // Aplica RN06: Resgate com saldo exato
+    teste("RN06 - Resgate com saldo exatamente igual ao custo zera o saldo", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d = window.Desafios.aceitar("ideia-01", "Ganhar 50 pts", 50);
+      window.Desafios.concluir(d.id);
+
+      const rec = window.Recompensas.criar({ titulo: "Sobremesa", custo: 50 });
+      window.Recompensas.resgatar(rec.id);
+
+      assertEqual(window.Pontuacao.total(), 0, "Saldo zerado");
+    });
+
+    // Aplica RN06: Bloqueia resgate sem saldo
+    teste("RN06 - Bloqueia resgate quando saldo é menor que o custo", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d = window.Desafios.aceitar("ideia-01", "Ganhar 20 pts", 20);
+      window.Desafios.concluir(d.id);
+
+      const rec = window.Recompensas.criar({ titulo: "Viagem", custo: 100 });
+      await assertRejeita(async () => {
+        window.Recompensas.resgatar(rec.id);
+      }, "RN06", "Resgate com saldo insuficiente");
+    });
+
+    // Aplica RN06: Bloqueia resgate duplo
+    teste("RN06 - Bloqueia tentativa de resgatar novamente uma recompensa já resgatada", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "U1", email: "u1@teste.com", senha: "senha123" });
+      const u2 = await window.Auth.cadastrar({ nome: "U2", email: "u2@teste.com", senha: "senha123" });
+      const conv = window.Casal.convidar("u2@teste.com");
+      await window.Auth.login("u2@teste.com", "senha123");
+      window.Casal.aceitarConvite(conv.id);
+
+      const d = window.Desafios.aceitar("ideia-01", "Ganhar 200 pts", 200);
+      window.Desafios.concluir(d.id);
+
+      const rec = window.Recompensas.criar({ titulo: "Café", custo: 50 });
+      window.Recompensas.resgatar(rec.id);
+
+      await assertRejeita(async () => {
+        window.Recompensas.resgatar(rec.id);
+      }, "RN06", "Resgate duplicado");
+    });
+
+    // ==========================================
+    // GRUPO RN07: Validação de Cadastro
+    // ==========================================
+    // Aplica RN07: Cadastro válido
+    teste("RN07 - Cadastro com dados válidos persiste usuário e senha hasheada em SHA-256", async () => {
+      const user = await window.Auth.cadastrar({
+        nome: "Mariana",
+        email: "mariana@teste.com",
+        senha: "senhaSegura123",
+        dataNascimento: "1999-05-15"
       });
 
-    })();
+      assertEqual(user.email, "mariana@teste.com", "E-mail normalizado");
+      assert(user.senhaHash !== "senhaSegura123", "Senha hasheada");
+      assertEqual(user.senhaHash.length, 64, "Comprimento SHA-256 de 64 chars");
+    });
+
+    // Aplica RN07: Senha curta
+    teste("RN07 - Rejeita cadastro quando senha possui menos de 6 caracteres", async () => {
+      await assertRejeita(async () => {
+        await window.Auth.cadastrar({
+          nome: "Beto",
+          email: "beto@teste.com",
+          senha: "12345",
+          dataNascimento: "2000-01-01"
+        });
+      }, "RN07", "Senha < 6 chars");
+    });
+
+    // Aplica RN07: E-mail duplicado
+    teste("RN07 - Rejeita cadastro quando e-mail já existe no sistema", async () => {
+      await window.Auth.cadastrar({
+        nome: "Primeiro",
+        email: "duplicado@teste.com",
+        senha: "senha123",
+        dataNascimento: "2000-01-01"
+      });
+
+      await assertRejeita(async () => {
+        await window.Auth.cadastrar({
+          nome: "Segundo",
+          email: "duplicado@teste.com",
+          senha: "outrasenha123",
+          dataNascimento: "2001-02-02"
+        });
+      }, "RN07", "E-mail duplicado");
+    });
+
+    // Aplica RN07: E-mail inválido
+    teste("RN07 - Rejeita cadastro com e-mail de formato inválido", async () => {
+      await assertRejeita(async () => {
+        await window.Auth.cadastrar({
+          nome: "Invalido",
+          email: "emailsemarroba",
+          senha: "senha123",
+          dataNascimento: "2000-01-01"
+        });
+      }, "RN07", "E-mail inválido");
+    });
+
+    // ==========================================
+    // GRUPO RN08: Validação de Convites
+    // ==========================================
+    // Aplica RN08: Envio de convite válido
+    teste("RN08 - Envio de convite para outro parceiro cria convite com status PENDENTE", async () => {
+      const u1 = await window.Auth.cadastrar({ nome: "Remetente", email: "remetente@teste.com", senha: "senha123" });
+      const convite = window.Casal.convidar("parceiro@teste.com");
+
+      assertEqual(convite.status, "PENDENTE", "Status PENDENTE");
+      assertEqual(convite.paraEmail, "parceiro@teste.com", "Destinatário");
+    });
+
+    // Aplica RN08: Bloqueio de auto-convite
+    teste("RN08 - Impede envio de convite de casal para si mesmo", async () => {
+      await window.Auth.cadastrar({ nome: "Narciso", email: "narciso@teste.com", senha: "senha123" });
+      await assertRejeita(async () => {
+        window.Casal.convidar("narciso@teste.com");
+      }, "RN08", "Convidar a si mesmo");
+    });
+
+    // Aplica RN08: Convidar usuário já em casal
+    teste("RN08 - Impede envio de convite para usuário que já pertence a um casal ativo", async () => {
+      const p1 = await window.Auth.cadastrar({ nome: "P1", email: "p1@teste.com", senha: "senha123" });
+      const p2 = await window.Auth.cadastrar({ nome: "P2", email: "p2@teste.com", senha: "senha123" });
+      await window.Auth.login("p1@teste.com", "senha123");
+      const cP = window.Casal.convidar("p2@teste.com");
+      await window.Auth.login("p2@teste.com", "senha123");
+      window.Casal.aceitarConvite(cP.id);
+
+      const avulso = await window.Auth.cadastrar({ nome: "Avulso", email: "avulso@teste.com", senha: "senha123" });
+      await window.Auth.login("avulso@teste.com", "senha123");
+
+      await assertRejeita(async () => {
+        window.Casal.convidar("p1@teste.com");
+      }, "RN08", "Convidar quem já está em casal");
+    });
+
+    // Executa testes automaticamente ao carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      TestRunner.executar();
+    });
   </script>
 </body>
 </html>
