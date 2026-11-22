@@ -1,38 +1,281 @@
+<!-- pages/desafios.html -->
 <!DOCTYPE html>
-<!--
-  Arquivo: pages/desafios.html
-  Dono: Unidade 3 (Desafios e Memórias)
-  Contrato / Propósito:
-  - Lista de desafios do casal (RN01, RN03).
-  - Abas/filtros: Desafios Ativos (status "ACEITO") e Desafios Concluídos (status "CONCLUIDO").
-  - Modal/área para concluir desafio (Desafios.concluir(id, { foto, mensagem })).
-  - Compressão de fotos para base64 ≤ 300 KB.
-  - Atualização automática de ofensiva e saldo após conclusão.
--->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meus Desafios — Romantic</title>
+
+  <!-- Google Fonts: Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3 CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Estilos Customizados com Caminhos Relativos -->
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/desafios.css">
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 
+  <!-- Cabeçalho Global (Injetado via Layout.montar) -->
   <div id="app-header"></div>
 
+  <!-- Conteúdo Principal Semântico -->
   <main id="app-main" class="container py-4 flex-grow-1">
-    <!-- Listagem de desafios ativos/concluídos e modal de conclusão serão implementados na Unidade 3 -->
+
+    <!-- Navegação Secundária / Breadcrumbs -->
+    <nav class="d-flex justify-content-between align-items-center mb-3" aria-label="Navegação secundária">
+      <a href="dashboard.html" class="text-decoration-none text-secondary small fw-semibold d-inline-flex align-items-center gap-1">
+        <i class="bi-arrow-left" aria-hidden="true"></i> Voltar ao Painel
+      </a>
+      <a href="explorar.html" class="btn btn-romantic-outline btn-sm">
+        <i class="bi-compass me-1" aria-hidden="true"></i> Explorar Ideias
+      </a>
+    </nav>
+
+    <!-- Alerta: Usuário Sem Casal Vinculado (se aplicável) -->
+    <div id="alerta-sem-casal" class="alert alert-warning d-none shadow-sm mb-4" role="alert">
+      <div class="d-flex align-items-center gap-3">
+        <i class="bi-heartbreak-fill fs-3 text-warning" aria-hidden="true"></i>
+        <div class="flex-grow-1">
+          <h2 class="h6 fw-bold mb-1">Você ainda não possui um parceiro(a) vinculado!</h2>
+          <p class="small mb-0 text-secondary">
+            Para aceitar desafios, acumular pontos de ofensiva e resgatar recompensas, conecte-se ao seu amor.
+          </p>
+        </div>
+        <a href="vinculo.html" class="btn btn-warning btn-sm fw-semibold">
+          <i class="bi-link-45deg me-1" aria-hidden="true"></i> Vincular Casal
+        </a>
+      </div>
+    </div>
+
+    <!-- Banner de Gamificação e Resumo de Pontuação do Casal -->
+    <header class="banner-gamificacao mb-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+        <div>
+          <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3 py-1 mb-2 fw-semibold">
+            <i class="bi-heart-fill me-1" aria-hidden="true"></i> Momentos a Dois
+          </span>
+          <h1 class="h3 fw-bold text-dark mb-1">Desafios do Casal</h1>
+          <p class="text-secondary small mb-0" id="subtitulo-casal">
+            Transformem planos em memórias afetivas inesquecíveis.
+          </p>
+        </div>
+        <a href="explorar.html" class="btn btn-romantic">
+          <i class="bi-plus-circle me-1" aria-hidden="true"></i> Novo Desafio
+        </a>
+      </div>
+
+      <!-- Métricas Gamificadas: Ofensiva, Saldo e Acumulado Histórico -->
+      <div class="row row-cols-1 row-cols-sm-3 g-3">
+        <div class="col">
+          <div class="item-metrica">
+            <div class="icone-metrica icone-metrica-fogo" aria-hidden="true">
+              <i class="bi-fire"></i>
+            </div>
+            <div>
+              <span class="text-secondary small d-block">Ofensiva Diária</span>
+              <strong class="fs-5 text-dark" id="metrica-ofensiva">0 dias</strong>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="item-metrica">
+            <div class="icone-metrica icone-metrica-estrela" aria-hidden="true">
+              <i class="bi-star-fill"></i>
+            </div>
+            <div>
+              <span class="text-secondary small d-block">Saldo de Pontos</span>
+              <strong class="fs-5 text-dark" id="metrica-saldo">0 pts</strong>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="item-metrica">
+            <div class="icone-metrica icone-metrica-trofeu" aria-hidden="true">
+              <i class="bi-trophy-fill"></i>
+            </div>
+            <div>
+              <span class="text-secondary small d-block">Total Conquistado</span>
+              <strong class="fs-5 text-dark" id="metrica-acumulado">0 pts</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Feedback Visual Animado: Mensagem Comemorativa Pós-Conclusão -->
+    <section id="banner-sucesso-conclusao" class="d-none mb-4" aria-live="polite">
+      <div class="alerta-conclusao p-4 animacao-sucesso d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3 text-start">
+          <div class="fs-1 text-success" aria-hidden="true">
+            <i class="bi-check-circle-fill"></i>
+          </div>
+          <div>
+            <h2 class="h5 fw-bold text-success mb-1" id="titulo-sucesso">🎉 Parabéns! Desafio Concluído com Amor!</h2>
+            <p class="text-secondary small mb-0" id="mensagem-sucesso">
+              Vocês ganharam pontos e continuaram fortalecendo a conexão de vocês.
+            </p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-success btn-sm rounded-pill" onclick="fecharAlertaSucesso()" aria-label="Fechar mensagem comemorativa">
+          <i class="bi-x-lg me-1" aria-hidden="true"></i> Fechar
+        </button>
+      </div>
+    </section>
+
+    <!-- Abas de Navegação (Em andamento / Concluídos) -->
+    <nav class="d-flex justify-content-start mb-4" aria-label="Filtro de Desafios">
+      <div class="nav-pills-desafios" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="tab-ativos" data-bs-toggle="pill" data-bs-target="#pane-ativos" type="button" role="tab" aria-controls="pane-ativos" aria-selected="true">
+          <i class="bi-hourglass-split" aria-hidden="true"></i> Em andamento
+          <span class="badge bg-secondary ms-1" id="badge-total-ativos">0</span>
+        </button>
+        <button class="nav-link" id="tab-concluidos" data-bs-toggle="pill" data-bs-target="#pane-concluidos" type="button" role="tab" aria-controls="pane-concluidos" aria-selected="false">
+          <i class="bi-check2-all" aria-hidden="true"></i> Concluídos
+          <span class="badge bg-secondary ms-1" id="badge-total-concluidos">0</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Conteúdo das Abas -->
+    <div class="tab-content" id="tabContentDesafios">
+
+      <!-- Aba 1: Desafios em Andamento (Status "ACEITO") -->
+      <section class="tab-pane fade show active" id="pane-ativos" role="tabpanel" aria-labelledby="tab-ativos">
+        <div id="lista-desafios-ativos" class="row row-cols-1 row-cols-md-2 g-4">
+          <!-- Cards de desafios ativos injetados dinamicamente via JS -->
+        </div>
+
+        <!-- Estado Vazio: Nenhum desafio ativo -->
+        <div id="vazio-ativos" class="estado-vazio d-none">
+          <div class="estado-vazio-icone" aria-hidden="true">
+            <i class="bi-heartbreak"></i>
+          </div>
+          <h2 class="h5 fw-bold text-dark mb-2">Nenhum desafio em andamento</h2>
+          <p class="text-secondary small mb-3 mx-auto" style="max-width: 480px;">
+            Vocês não possuem nenhuma atividade ativa no momento. Escolham uma ideia romântica ou divertida do catálogo para viverem juntos!
+          </p>
+          <a href="explorar.html" class="btn btn-romantic btn-sm">
+            <i class="bi-compass me-1" aria-hidden="true"></i> Escolher uma Atividade
+          </a>
+        </div>
+      </section>
+
+      <!-- Aba 2: Desafios Concluídos com Memória (Status "CONCLUIDO") -->
+      <section class="tab-pane fade" id="pane-concluidos" role="tabpanel" aria-labelledby="tab-concluidos">
+        <div id="lista-desafios-concluidos" class="row row-cols-1 row-cols-md-2 g-4">
+          <!-- Cards de desafios concluídos injetados dinamicamente via JS -->
+        </div>
+
+        <!-- Estado Vazio: Nenhum desafio concluído -->
+        <div id="vazio-concluidos" class="estado-vazio d-none">
+          <div class="estado-vazio-icone" aria-hidden="true">
+            <i class="bi-camera"></i>
+          </div>
+          <h2 class="h5 fw-bold text-dark mb-2">Ainda não há memórias registradas</h2>
+          <p class="text-secondary small mb-3 mx-auto" style="max-width: 480px;">
+            Quando vocês concluírem seu primeiro desafio, a foto e a mensagem carinhosa deste momento ficarão guardadas aqui para sempre.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
   </main>
 
+  <!-- Modal Bootstrap: Concluir Desafio com Memória e Upload de Imagem -->
+  <div class="modal fade" id="modalConcluir" tabindex="-1" aria-labelledby="modalConcluirTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        
+        <header class="modal-header modal-header-romantic">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi-check-circle-fill text-success fs-4" aria-hidden="true"></i>
+            <div>
+              <h2 class="modal-title h5 fw-bold text-dark mb-0" id="modalConcluirTitulo">Concluir Desafio</h2>
+              <span class="text-secondary small" id="modal-subtitulo-ideia">Registre a memória afetiva</span>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar janela"></button>
+        </header>
+
+        <div class="modal-body p-4">
+          
+          <div class="alert alert-info py-2 px-3 small mb-3 d-flex align-items-center gap-2">
+            <i class="bi-info-circle-fill fs-5 text-info" aria-hidden="true"></i>
+            <div>
+              Ao confirmar a conclusão, o casal receberá <strong id="modal-pontos-aviso">+0 pts</strong> e manterá a ofensiva diária ativa!
+            </div>
+          </div>
+
+          <!-- Mensagem de Erro de Validação no Modal -->
+          <div id="modal-erro-alerta" class="alert alert-danger py-2 px-3 small mb-3 d-none" role="alert">
+            <i class="bi-exclamation-triangle-fill me-1" aria-hidden="true"></i>
+            <span id="modal-erro-texto">Erro ao processar imagem ou dados.</span>
+          </div>
+
+          <form id="form-concluir-desafio" novalidate>
+            <input type="hidden" id="modal-desafio-id" value="">
+
+            <!-- Campo 1: Foto da Memória (Input File com redimensionamento em Canvas) -->
+            <div class="mb-3">
+              <label for="input-foto" class="form-label fw-semibold text-dark">
+                <i class="bi-camera-fill text-danger me-1" aria-hidden="true"></i> Foto do Momento (opcional)
+              </label>
+              <input type="file" class="form-control" id="input-foto" accept="image/*">
+              <div class="form-text text-secondary small">
+                A foto é comprimida automaticamente para largura máx. de 800px e formato leve (máx. 300 KB).
+              </div>
+
+              <!-- Pré-visualização da Foto Selecionada -->
+              <div id="container-preview-foto" class="preview-container mt-2 d-none">
+                <img id="img-preview" src="" alt="Pré-visualização da foto da memória" class="preview-img">
+                <button type="button" class="btn-remover-foto" id="btn-remover-foto" title="Remover foto selecionada" aria-label="Remover foto selecionada">
+                  <i class="bi-trash3-fill" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Campo 2: Mensagem ou Reflexão Afetiva -->
+            <div class="mb-2">
+              <label for="input-mensagem" class="form-label fw-semibold text-dark">
+                <i class="bi-chat-heart-fill text-danger me-1" aria-hidden="true"></i> Mensagem ou Reflexão (opcional)
+              </label>
+              <textarea class="form-control" id="input-mensagem" rows="3" placeholder="Como foi viver esse momento juntos? Escreva um recadinho fofo ou algo que tornou o dia especial..."></textarea>
+              <div class="form-text text-secondary small">
+                Sua mensagem será exibida na galeria de memórias do casal.
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <footer class="modal-footer bg-light border-0">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-romantic" id="btn-confirmar-conclusao">
+            <i class="bi-check-circle-fill me-1" aria-hidden="true"></i> Concluir Atividade
+          </button>
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé Global (Injetado via Layout.montar) -->
   <div id="app-footer"></div>
 
+  <!-- Dependências: Bootstrap Bundle CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Módulos Globais do Romantic (Scripts Clássicos) -->
   <script src="../js/storage.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/casal.js"></script>
@@ -41,13 +284,452 @@
   <script src="../js/desafios.js"></script>
   <script src="../js/pontuacao.js"></script>
   <script src="../js/layout.js"></script>
+
+  <!-- Lógica de Apresentação e Interação da Página de Desafios -->
   <script>
+    // Estado local da tela para manipulação do upload e compressão
+    let fotoBase64Processada = null;
+    let modalConcluirInstance = null;
+
+    /**
+     * Comprime e redimensiona a imagem selecionada utilizando o elemento Canvas nativo.
+     * Requisitos aplicados:
+     * - Largura máxima de 800px (mantendo proporção da altura).
+     * - Exportação em JPEG com qualidade 0.7.
+     * - Rejeição estrita caso o tamanho final comprimido ultrapasse 300 KB.
+     * 
+     * @param {File} arquivoImagem 
+     * @returns {Promise<string|null>} Data URI em base64 da imagem comprimida
+     */
+    function comprimirImagemCanvas(arquivoImagem) {
+      return new Promise((resolve, reject) => {
+        if (!arquivoImagem) {
+          return resolve(null);
+        }
+
+        // Validação de tipo MIME
+        if (!arquivoImagem.type.startsWith('image/')) {
+          return reject(new Error('Por favor, selecione um arquivo de imagem válido (JPG, PNG, WebP).'));
+        }
+
+        const leitor = new FileReader();
+        leitor.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const LARGURA_MAXIMA = 800;
+            let largura = img.width;
+            let altura = img.height;
+
+            // Redimensiona proporcionalmente se a largura exceder 800px
+            if (largura > LARGURA_MAXIMA) {
+              altura = Math.round((altura * LARGURA_MAXIMA) / largura);
+              largura = LARGURA_MAXIMA;
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = largura;
+            canvas.height = altura;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, largura, altura);
+
+            // Exporta em JPEG com fator de compressão 0.7
+            const dataUrlJpeg = canvas.toDataURL('image/jpeg', 0.7);
+
+            // Calcula o tamanho real em bytes da string codificada em base64
+            const parteBase64 = dataUrlJpeg.split(',')[1] || '';
+            const tamanhoEmBytes = Math.round((parteBase64.length * 3) / 4);
+
+            // Limite estrito de 300 KB (300 * 1024 = 307.200 bytes)
+            const LIMITE_MAXIMO_BYTES = 300 * 1024;
+            if (tamanhoEmBytes > LIMITE_MAXIMO_BYTES) {
+              const tamanhoKb = Math.round(tamanhoEmBytes / 1024);
+              return reject(new Error(`A imagem comprimida possui ${tamanhoKb} KB, excedendo o limite de 300 KB. Por favor, escolha uma foto menor.`));
+            }
+
+            resolve(dataUrlJpeg);
+          };
+
+          img.onerror = () => reject(new Error('Erro ao decodificar a imagem selecionada.'));
+          img.src = e.target.result;
+        };
+
+        leitor.onerror = () => reject(new Error('Falha ao ler o arquivo no dispositivo.'));
+        leitor.readAsDataURL(arquivoImagem);
+      });
+    }
+
+    /**
+     * Formata uma string de data ISO 8601 para formato amigável brasileiro.
+     * @param {string} isoString 
+     * @returns {string} Data e hora formatadas
+     */
+    function formatarDataHora(isoString) {
+      if (!isoString) return '';
+      const data = new Date(isoString);
+      if (isNaN(data.getTime())) return '';
+      return data.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    /**
+     * Escapa caracteres HTML para prevenir injeção em renderização dinâmica.
+     * @param {string} texto 
+     * @returns {string} Texto seguro
+     */
+    function escaparHtml(texto) {
+      if (!texto) return '';
+      const div = document.createElement('div');
+      div.textContent = texto;
+      return div.innerHTML;
+    }
+
+    /**
+     * Atualiza o painel de métricas gamificadas do casal (ofensiva, saldo e acumulado).
+     */
+    function atualizarPainelMetricas() {
+      if (typeof Pontuacao !== 'undefined') {
+        const ofensivaDias = typeof Pontuacao.ofensiva === 'function' ? Pontuacao.ofensiva() : 0;
+        const saldoPts = typeof Pontuacao.total === 'function' ? Pontuacao.total() : 0;
+        const acumuladoPts = typeof Pontuacao.acumulado === 'function' ? Pontuacao.acumulado() : 0;
+
+        const elOfensiva = document.getElementById('metrica-ofensiva');
+        const elSaldo = document.getElementById('metrica-saldo');
+        const elAcumulado = document.getElementById('metrica-acumulado');
+
+        if (elOfensiva) elOfensiva.textContent = `${ofensivaDias} ${ofensivaDias === 1 ? 'dia' : 'dias'}`;
+        if (elSaldo) elSaldo.textContent = `${saldoPts} pts`;
+        if (elAcumulado) elAcumulado.textContent = `${acumuladoPts} pts`;
+      }
+    }
+
+    /**
+     * Renderiza as listas de desafios em andamento ("ACEITO") e concluídos ("CONCLUIDO").
+     */
+    function renderizarDesafios() {
+      atualizarPainelMetricas();
+
+      const usuario = typeof Auth !== 'undefined' ? Auth.usuarioAtual() : null;
+      const parceiro = typeof Casal !== 'undefined' && typeof Casal.parceiro === 'function' ? Casal.parceiro() : null;
+      const subtituloCasal = document.getElementById('subtitulo-casal');
+
+      if (subtituloCasal && parceiro) {
+        subtituloCasal.textContent = `Casal: ${usuario.nome || 'Você'} & ${parceiro.nome || 'Amor'}`;
+      }
+
+      // Consulta os desafios via módulo Desafios (regras em js/desafios.js)
+      let desafiosAtivos = [];
+      let desafiosConcluidos = [];
+
+      try {
+        if (typeof Desafios !== 'undefined' && typeof Desafios.listar === 'function') {
+          desafiosAtivos = Desafios.listar('ACEITO');
+          desafiosConcluidos = Desafios.listar('CONCLUIDO');
+        }
+      } catch (e) {
+        console.error('Erro ao listar desafios:', e);
+      }
+
+      // Atualiza os contadores das abas
+      const badgeAtivos = document.getElementById('badge-total-ativos');
+      const badgeConcluidos = document.getElementById('badge-total-concluidos');
+      if (badgeAtivos) badgeAtivos.textContent = desafiosAtivos.length;
+      if (badgeConcluidos) badgeConcluidos.textContent = desafiosConcluidos.length;
+
+      // 1. Renderiza Desafios em Andamento
+      const containerAtivos = document.getElementById('lista-desafios-ativos');
+      const vazioAtivos = document.getElementById('vazio-ativos');
+
+      if (containerAtivos) {
+        containerAtivos.innerHTML = '';
+        if (desafiosAtivos.length === 0) {
+          if (vazioAtivos) vazioAtivos.classList.remove('d-none');
+        } else {
+          if (vazioAtivos) vazioAtivos.classList.add('d-none');
+
+          desafiosAtivos.forEach(desafio => {
+            const col = document.createElement('div');
+            col.className = 'col';
+            col.innerHTML = `
+              <article class="card-desafio p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
+                    <span class="badge-status-ativo">
+                      <i class="bi-hourglass-split" aria-hidden="true"></i> Em andamento
+                    </span>
+                    <span class="badge-pontos">
+                      <i class="bi-star-fill text-warning" aria-hidden="true"></i> +${desafio.pontos} pts
+                    </span>
+                  </div>
+                  <h2 class="h5 fw-bold text-dark mb-2">${escaparHtml(desafio.titulo)}</h2>
+                  <p class="text-secondary small mb-3">
+                    <i class="bi-calendar-event me-1" aria-hidden="true"></i> Aceito em: ${formatarDataHora(desafio.criadoEm)}
+                  </p>
+                </div>
+                <div class="pt-2 border-top">
+                  <button type="button" class="btn btn-romantic w-100 btn-abrir-concluir" data-id="${desafio.id}" data-titulo="${escaparHtml(desafio.titulo)}" data-pontos="${desafio.pontos}">
+                    <i class="bi-check-circle-fill me-1" aria-hidden="true"></i> Concluir desafio
+                  </button>
+                </div>
+              </article>
+            `;
+            containerAtivos.appendChild(col);
+          });
+        }
+      }
+
+      // 2. Renderiza Desafios Concluídos com Memória Afetiva
+      const containerConcluidos = document.getElementById('lista-desafios-concluidos');
+      const vazioConcluidos = document.getElementById('vazio-concluidos');
+
+      if (containerConcluidos) {
+        containerConcluidos.innerHTML = '';
+        if (desafiosConcluidos.length === 0) {
+          if (vazioConcluidos) vazioConcluidos.classList.remove('d-none');
+        } else {
+          if (vazioConcluidos) vazioConcluidos.classList.add('d-none');
+
+          desafiosConcluidos.forEach(desafio => {
+            const temFoto = desafio.memoria && desafio.memoria.foto;
+            const temMensagem = desafio.memoria && desafio.memoria.mensagem;
+
+            let htmlMemoria = '';
+            if (temFoto || temMensagem) {
+              htmlMemoria = `
+                <div class="memoria-box mt-3">
+                  ${temFoto ? `
+                    <div class="memoria-foto-container mb-2">
+                      <img src="${desafio.memoria.foto}" alt="Foto da memória: ${escaparHtml(desafio.titulo)}" class="memoria-foto">
+                    </div>
+                  ` : ''}
+                  ${temMensagem ? `
+                    <div class="memoria-mensagem text-start">
+                      <i class="bi-chat-quote-fill text-danger me-1 fs-6" aria-hidden="true"></i>
+                      <span>"${escaparHtml(desafio.memoria.mensagem)}"</span>
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            } else {
+              htmlMemoria = `
+                <div class="text-secondary small fst-italic mt-2">
+                  <i class="bi-heart me-1 text-danger" aria-hidden="true"></i> Concluído com sucesso (sem foto registrada).
+                </div>
+              `;
+            }
+
+            const col = document.createElement('div');
+            col.className = 'col';
+            col.innerHTML = `
+              <article class="card-desafio concluido p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
+                    <span class="badge-status-concluido">
+                      <i class="bi-check2-all" aria-hidden="true"></i> Concluído
+                    </span>
+                    <span class="badge-pontos">
+                      <i class="bi-star-fill text-warning" aria-hidden="true"></i> +${desafio.pontos} pts
+                    </span>
+                  </div>
+                  <h2 class="h5 fw-bold text-dark mb-1">${escaparHtml(desafio.titulo)}</h2>
+                  <p class="text-secondary small mb-2">
+                    <i class="bi-check2-circle text-success me-1" aria-hidden="true"></i> Concluído em: ${formatarDataHora(desafio.concluidoEm)}
+                  </p>
+                  ${htmlMemoria}
+                </div>
+              </article>
+            `;
+            containerConcluidos.appendChild(col);
+          });
+        }
+      }
+
+      // Adiciona listener aos botões de conclusão gerados dinamicamente
+      document.querySelectorAll('.btn-abrir-concluir').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const desafioId = btn.getAttribute('data-id');
+          const titulo = btn.getAttribute('data-titulo');
+          const pontos = btn.getAttribute('data-pontos');
+          abrirModalConcluir(desafioId, titulo, pontos);
+        });
+      });
+    }
+
+    /**
+     * Prepara e exibe o modal de conclusão para o desafio selecionado.
+     */
+    function abrirModalConcluir(desafioId, titulo, pontos) {
+      document.getElementById('modal-desafio-id').value = desafioId;
+      document.getElementById('modal-subtitulo-ideia').textContent = titulo;
+      document.getElementById('modal-pontos-aviso').textContent = `+${pontos} pts`;
+
+      // Limpa os campos do formulário
+      document.getElementById('input-foto').value = '';
+      document.getElementById('input-mensagem').value = '';
+      removerFotoSelecionada();
+      esconderErroModal();
+
+      if (!modalConcluirInstance) {
+        modalConcluirInstance = new bootstrap.Modal(document.getElementById('modalConcluir'));
+      }
+      modalConcluirInstance.show();
+    }
+
+    function exibirErroModal(msg) {
+      const alerta = document.getElementById('modal-erro-alerta');
+      const texto = document.getElementById('modal-erro-texto');
+      if (alerta && texto) {
+        texto.textContent = msg;
+        alerta.classList.remove('d-none');
+      }
+    }
+
+    function esconderErroModal() {
+      const alerta = document.getElementById('modal-erro-alerta');
+      if (alerta) alerta.classList.add('d-none');
+    }
+
+    function removerFotoSelecionada() {
+      fotoBase64Processada = null;
+      const inputFoto = document.getElementById('input-foto');
+      const containerPreview = document.getElementById('container-preview-foto');
+      const imgPreview = document.getElementById('img-preview');
+      if (inputFoto) inputFoto.value = '';
+      if (imgPreview) imgPreview.src = '';
+      if (containerPreview) containerPreview.classList.add('d-none');
+    }
+
+    function fecharAlertaSucesso() {
+      const banner = document.getElementById('banner-sucesso-conclusao');
+      if (banner) banner.classList.add('d-none');
+    }
+
+    // Inicialização da página e registro de eventos
     document.addEventListener('DOMContentLoaded', () => {
+      // Aplica RN01: Exige login ativo para acessar desafios.html
       if (typeof Auth !== 'undefined' && typeof Auth.exigirLogin === 'function') {
         Auth.exigirLogin('login.html');
       }
+
+      // Injeta cabeçalho e rodapé padronizados
       if (typeof Layout !== 'undefined' && typeof Layout.montar === 'function') {
         Layout.montar({ paginaAtiva: 'desafios' });
+      }
+
+      // Validação de vínculo de casal (RN02/RN03)
+      const usuario = typeof Auth !== 'undefined' ? Auth.usuarioAtual() : null;
+      if (usuario && !usuario.casalId) {
+        const alertaSemCasal = document.getElementById('alerta-sem-casal');
+        if (alertaSemCasal) alertaSemCasal.classList.remove('d-none');
+      }
+
+      // Renderiza os desafios iniciais
+      renderizarDesafios();
+
+      // Monitora upload de foto com compressão Canvas em tempo real
+      const inputFoto = document.getElementById('input-foto');
+      if (inputFoto) {
+        inputFoto.addEventListener('change', async (evento) => {
+          esconderErroModal();
+          const arquivo = evento.target.files && evento.target.files[0];
+          if (!arquivo) {
+            removerFotoSelecionada();
+            return;
+          }
+
+          try {
+            // Executa compressão nativa em Canvas: máx. 800px, JPEG qualidade 0.7 e limite de 300 KB
+            const dataUrlJpeg = await comprimirImagemCanvas(arquivo);
+            fotoBase64Processada = dataUrlJpeg;
+
+            const containerPreview = document.getElementById('container-preview-foto');
+            const imgPreview = document.getElementById('img-preview');
+            if (imgPreview && containerPreview) {
+              imgPreview.src = dataUrlJpeg;
+              containerPreview.classList.remove('d-none');
+            }
+          } catch (erro) {
+            console.warn('Erro ao processar imagem:', erro);
+            exibirErroModal(erro.message || 'Falha ao processar a foto.');
+            removerFotoSelecionada();
+          }
+        });
+      }
+
+      // Botão para remover foto selecionada no modal
+      const btnRemover = document.getElementById('btn-remover-foto');
+      if (btnRemover) {
+        btnRemover.addEventListener('click', removerFotoSelecionada);
+      }
+
+      // Ação de confirmar conclusão do desafio
+      const btnConfirmar = document.getElementById('btn-confirmar-conclusao');
+      if (btnConfirmar) {
+        btnConfirmar.addEventListener('click', () => {
+          esconderErroModal();
+          const desafioId = document.getElementById('modal-desafio-id').value;
+          const mensagemTexto = document.getElementById('input-mensagem').value;
+
+          if (!desafioId) {
+            exibirErroModal('Identificador de desafio inválido.');
+            return;
+          }
+
+          try {
+            // Chama o módulo Desafios (aplica RN01, RN03 e RN04)
+            const desafioConcluido = Desafios.concluir(desafioId, {
+              foto: fotoBase64Processada,
+              mensagem: mensagemTexto
+            });
+
+            // Fecha o modal Bootstrap
+            if (modalConcluirInstance) {
+              modalConcluirInstance.hide();
+            }
+
+            // Atualiza estatísticas de pontuação e ofensiva
+            const pontosGanhos = desafioConcluido.pontos || 0;
+            const ofensivaAtual = typeof Pontuacao !== 'undefined' ? Pontuacao.ofensiva() : 1;
+
+            // Exibe mensagem animada de sucesso no topo com os pontos ganhos e a nova ofensiva
+            const bannerSucesso = document.getElementById('banner-sucesso-conclusao');
+            const tituloSucesso = document.getElementById('titulo-sucesso');
+            const mensagemSucesso = document.getElementById('mensagem-sucesso');
+
+            if (bannerSucesso && tituloSucesso && mensagemSucesso) {
+              tituloSucesso.textContent = `🎉 Desafio "${desafioConcluido.titulo}" Concluído!`;
+              mensagemSucesso.innerHTML = `
+                Parabéns! Vocês ganharam <strong>+${pontosGanhos} pontos</strong> e a ofensiva de vocês agora é de 
+                <strong class="text-danger"><i class="bi-fire" aria-hidden="true"></i> ${ofensivaAtual} ${ofensivaAtual === 1 ? 'dia seguido' : 'dias seguidos'}</strong>!
+              `;
+              bannerSucesso.classList.remove('d-none');
+              bannerSucesso.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            // Recarrega as listagens e atualiza os dados visuais
+            renderizarDesafios();
+
+            // Alterna para a aba de "Concluídos" para exibir a memória recém-registrada
+            const tabConcluidosEl = document.getElementById('tab-concluidos');
+            if (tabConcluidosEl) {
+              const tabConcluidos = new bootstrap.Tab(tabConcluidosEl);
+              tabConcluidos.show();
+            }
+
+          } catch (erro) {
+            console.error('Erro ao concluir desafio:', erro);
+            if (erro instanceof window.RegraViolada || (erro && erro.name === 'RegraViolada')) {
+              exibirErroModal(`[${erro.regra}] ${erro.mensagem}`);
+            } else {
+              exibirErroModal(erro.message || 'Ocorreu um erro ao concluir o desafio.');
+            }
+          }
+        });
       }
     });
   </script>
